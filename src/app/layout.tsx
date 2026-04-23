@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/site-nav";
+import { Analytics } from '@vercel/analytics/next';
 
 // Body: Inter — neutral, readable at 14px. Headings: Space Grotesk — editorial
 // feel with tight tracking. Mono: JetBrains Mono for ratings/ranks/codes.
@@ -87,6 +88,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
