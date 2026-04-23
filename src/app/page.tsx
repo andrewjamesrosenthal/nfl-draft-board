@@ -14,7 +14,7 @@ export default async function HomePage() {
   const currentClass = await db.draftClass.findFirst({ where: { isCurrent: true } });
   const currentYear = currentClass?.year ?? 2026;
 
-  const [topCommunity, totalMatchups, totalPlayers] = await Promise.all([
+  const [topCommunity, totalMatchups, totalPlayers, completedPicks] = await Promise.all([
     db.communityRanking.findMany({
       where: { draftYear: currentYear },
       include: { player: true },
@@ -22,12 +22,18 @@ export default async function HomePage() {
       take: 10,
     }),
     db.pairwiseMatchup.count(),
-    db.player.count(),
+    db.player.count({ where: { draftYear: currentYear } }),
+    db.draftOrderPick.count({ where: { draftYear: currentYear, isCompleted: true } }),
   ]);
 
   const daysToDraft = currentClass?.draftDate
     ? Math.ceil((new Date(currentClass.draftDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
     : null;
+
+  // "Draft is live" only once actual picks are being made.
+  // On draft day before picks start, show "Draft day" instead.
+  const draftIsLive = completedPicks > 0;
+  const isDraftDay = daysToDraft !== null && daysToDraft <= 0 && !draftIsLive;
 
   return (
     <div className="flex flex-col gap-14">
@@ -52,10 +58,16 @@ export default async function HomePage() {
                 {daysToDraft} day{daysToDraft === 1 ? "" : "s"} to draft
               </span>
             )}
-            {daysToDraft != null && daysToDraft <= 0 && (
+            {isDraftDay && (
+              <span className="chip border-amber-500/40 text-amber-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-slow-pulse" />
+                Draft day
+              </span>
+            )}
+            {draftIsLive && (
               <span className="chip border-emerald-500/40 text-emerald-300">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-slow-pulse" />
-                Draft is live
+                Draft is live · {completedPicks} pick{completedPicks === 1 ? "" : "s"} in
               </span>
             )}
           </div>
@@ -85,8 +97,8 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="flex flex-wrap gap-2 pt-2 text-xs">
-            <span className="chip"><span className="num font-semibold text-foreground">{totalPlayers}</span> prospects · 9 classes</span>
-            <span className="chip"><span className="num font-semibold text-foreground">{totalMatchups}</span> matchups</span>
+            <span className="chip"><span className="num font-semibold text-foreground">{totalPlayers}</span> {currentYear} prospects</span>
+            <span className="chip"><span className="num font-semibold text-foreground">{totalMatchups}</span> community matchups</span>
             <span className="chip">Elo paired-comparison engine</span>
           </div>
           <div className="pt-2 md:max-w-md">
