@@ -24,12 +24,18 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "DraftBoard — NFL Draft prospect rankings",
   description:
-    "Build your personal NFL Draft big board through head-to-head comparisons. Compare to the community consensus, run mocks, and explore prospects from 2018 through the current class.",
+    "Build your personal NFL Draft big board through head-to-head comparisons. Compare to the community consensus and explore prospects from 2018 through the current class.",
   openGraph: {
     title: "DraftBoard — NFL Draft prospect rankings",
     description:
-      "Head-to-head pairwise rankings, community consensus, mock drafts, and redraft tools.",
+      "Head-to-head pairwise rankings, community consensus, and live draft order.",
   },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 // Blocking inline script: reads the user's theme preference and applies the
@@ -63,7 +69,8 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen font-sans">
         <SiteNav />
-        <main className="container py-8 md:py-12">{children}</main>
+        {/* pb-20 on mobile leaves room above the fixed bottom tab bar */}
+        <main className="container py-6 pb-20 md:py-12 md:pb-12">{children}</main>
         <footer className="mt-16 border-t border-border/60 py-8">
           <div className="container flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-xs text-muted-foreground">
             <div className="flex items-center gap-2">

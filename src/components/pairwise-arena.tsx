@@ -179,8 +179,9 @@ export function PairwiseArena() {
   }, [mode, matchup, position, year]);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-end gap-3">
+    <div className="flex flex-col gap-4">
+      {/* Controls row — compact on mobile */}
+      <div className="flex flex-wrap items-end gap-2">
         <div className="flex flex-col">
           <label className="text-xs uppercase tracking-wide text-muted-foreground">Class</label>
           <Select value={year} onChange={(e) => setYear(Number(e.target.value))}>
@@ -192,64 +193,66 @@ export function PairwiseArena() {
         <div className="flex flex-col">
           <label className="text-xs uppercase tracking-wide text-muted-foreground">Mode</label>
           <Select value={mode} onChange={(e) => setMode(e.target.value as Mode)}>
-            <option value="AUTO">Auto (recommended)</option>
-            <option value="OVERALL">Overall (all positions)</option>
-            <option value="POSITION">Position only</option>
-            <option value="HISTORICAL">Historical vs current</option>
+            <option value="AUTO">Auto</option>
+            <option value="OVERALL">Overall</option>
+            <option value="POSITION">Position</option>
+            <option value="HISTORICAL">Historical</option>
           </Select>
         </div>
         {(mode === "POSITION" || mode === "HISTORICAL") && (
           <div className="flex flex-col">
             <label className="text-xs uppercase tracking-wide text-muted-foreground">Position</label>
             <Select value={position} onChange={(e) => setPosition(e.target.value)}>
-              {mode === "HISTORICAL" && <option value="">Any position</option>}
+              {mode === "HISTORICAL" && <option value="">Any</option>}
               {POSITIONS.map((p) => (
                 <option key={p} value={p}>{POSITION_LABELS[p]}</option>
               ))}
             </Select>
           </div>
         )}
-        <div className="ml-auto flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="ml-auto flex items-center gap-2">
           <button
             type="button"
             onClick={goBack}
             disabled={history.length === 0 || loading}
-            title={history.length ? "Revisit the previous matchup" : "Nothing to go back to yet"}
             className={cn(
-              "inline-flex h-8 items-center gap-1.5 rounded-md border border-border/70 bg-muted/30 px-2.5 text-xs transition-colors",
+              "inline-flex h-8 items-center gap-1 rounded-md border border-border/70 bg-muted/30 px-2.5 text-xs transition-colors",
               history.length === 0 || loading
-                ? "opacity-40 cursor-not-allowed"
-                : "hover:border-brand/40 hover:text-foreground",
+                ? "opacity-40 cursor-not-allowed text-muted-foreground"
+                : "hover:border-brand/40 hover:text-foreground text-muted-foreground",
             )}
           >
-            <Undo2 className="h-3.5 w-3.5" /> Back
+            <Undo2 className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Back</span>
           </button>
-          <Badge variant="brand" className="flex items-center gap-1">
+          <Badge variant="brand" className="hidden sm:flex items-center gap-1">
             <Zap className="h-3 w-3" />
-            {matchup?.communityVotes ?? 0} vote{matchup?.communityVotes === 1 ? "" : "s"} on this pair
+            {matchup?.communityVotes ?? 0}
           </Badge>
-          <Badge variant="outline">streak: {streak}</Badge>
+          <Badge variant="outline" className="hidden sm:flex">
+            {streak} streak
+          </Badge>
         </div>
       </div>
 
-      {mode === "AUTO" && matchup?.stage && !lockedPlayer && (
+      {/* Status chips */}
+      {(mode === "AUTO" && matchup?.stage && !lockedPlayer) && (
         <div className="flex justify-center">
-          <span className="chip border-brand/40 bg-brand/10 text-foreground">
+          <span className="chip border-brand/40 bg-brand/10 text-foreground text-xs">
             <span className="h-1.5 w-1.5 rounded-full bg-brand animate-slow-pulse" />
             {STAGE_LABEL[matchup.stage].label}
           </span>
         </div>
       )}
-
       {lockedPlayer && (
-        <div className="flex items-center justify-center gap-2">
-          <span className="chip border-amber-400/40 bg-amber-400/10 text-amber-200">
-            <Target className="h-3 w-3" /> Locked on <span className="font-semibold">{lockedPlayer.fullName}</span>
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          <span className="chip border-amber-400/40 bg-amber-400/10 text-amber-200 text-xs">
+            <Target className="h-3 w-3" /> Locked: <span className="font-semibold">{lockedPlayer.fullName}</span>
           </span>
           <button
             type="button"
             onClick={unlockPlayer}
-            className="inline-flex items-center gap-1 rounded-md border border-border/60 bg-muted/30 px-2 py-1 text-xs text-muted-foreground transition-colors hover:border-brand/40 hover:text-foreground"
+            className="inline-flex items-center gap-1 rounded-md border border-border/60 bg-muted/30 px-2 py-1 text-xs text-muted-foreground transition-colors hover:border-brand/40"
           >
             <X className="h-3 w-3" /> Unlock
           </button>
@@ -257,24 +260,29 @@ export function PairwiseArena() {
       )}
       {!lockedPlayer && stickyRemaining > 0 && stickyId != null && (
         <div className="flex justify-center">
-          <span className="chip border-brand/40 bg-brand/10 text-foreground">
+          <span className="chip border-brand/40 bg-brand/10 text-foreground text-xs">
             <Pin className="h-3 w-3 text-brand" />
-            {stickyRemaining} more matchup{stickyRemaining === 1 ? "" : "s"} with your last pick
+            {stickyRemaining} more with last pick
           </span>
         </div>
       )}
 
-      <div className="text-center text-xs text-muted-foreground">{legend}</div>
+      {/* Mobile-only "tap to pick" hint */}
+      <p className="text-center text-xs text-muted-foreground md:hidden">
+        Tap a card to pick · <button onClick={() => submit("SKIP")} className="underline underline-offset-2">skip</button>
+      </p>
+      <p className="hidden md:block text-center text-xs text-muted-foreground">{legend}</p>
 
+      {/* Cards */}
       <AnimatePresence mode="wait">
-        {matchup && (
+        {matchup ? (
           <motion.div
             key={matchup.left.id + ":" + matchup.right.id}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18 }}
-            className="grid gap-4 md:grid-cols-2"
+            className="grid gap-3 grid-cols-2"
           >
             <ProspectButton
               player={matchup.left}
@@ -295,43 +303,38 @@ export function PairwiseArena() {
               onUnlock={unlockPlayer}
             />
           </motion.div>
+        ) : (
+          <div className="grid gap-3 grid-cols-2">
+            <div className="h-64 animate-pulse rounded-xl bg-muted" />
+            <div className="h-64 animate-pulse rounded-xl bg-muted" />
+          </div>
         )}
       </AnimatePresence>
 
-      <div className="flex items-center justify-center gap-3">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => submit("LEFT")}
-          disabled={!matchup || loading}
-          className="min-w-[10rem]"
-        >
+      {/* Desktop action buttons — hidden on mobile (tap card instead) */}
+      <div className="hidden md:flex items-center justify-center gap-3">
+        <Button variant="outline" size="lg" onClick={() => submit("LEFT")} disabled={!matchup || loading} className="min-w-[9rem]">
           <ArrowLeft className="h-4 w-4" /> I like left
         </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => submit("SKIP")}
-          disabled={!matchup || loading}
-          className="min-w-[6rem]"
-        >
+        <Button variant="outline" size="lg" onClick={() => submit("SKIP")} disabled={!matchup || loading} className="min-w-[5rem]">
           <SkipForward className="h-4 w-4" /> Skip
         </Button>
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => submit("RIGHT")}
-          disabled={!matchup || loading}
-          className="min-w-[10rem]"
-        >
+        <Button variant="outline" size="lg" onClick={() => submit("RIGHT")} disabled={!matchup || loading} className="min-w-[9rem]">
           I like right <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
 
+      {/* Mobile skip button */}
+      <div className="flex md:hidden justify-center">
+        <Button variant="ghost" size="sm" onClick={() => submit("SKIP")} disabled={!matchup || loading} className="text-muted-foreground gap-1.5">
+          <SkipForward className="h-3.5 w-3.5" /> Skip this matchup
+        </Button>
+      </div>
+
       {matchup && (
-        <p className="text-center text-xs text-muted-foreground">
+        <p className="hidden md:block text-center text-xs text-muted-foreground">
           <Swords className="inline h-3 w-3 mr-1" />
-          {matchup.reason} <span className="mx-1">·</span> shortcuts A / D / Space
+          {matchup.reason} · shortcuts A / D / Space
         </p>
       )}
     </div>
@@ -383,21 +386,21 @@ function ProspectButton({
         >
           {locked ? <PinOff className="h-4 w-4" /> : <Pin className="h-4 w-4" />}
         </button>
-        <CardContent className="flex flex-col items-center gap-4 p-6">
-          <PlayerHeadshot url={player.headshotUrl} espnId={player.espnId} espnIdSource={player.espnIdSource} positionGroup={player.positionGroup} name={player.fullName} size="xl" />
+        <CardContent className="flex flex-col items-center gap-2 p-3 md:gap-4 md:p-6">
+          <PlayerHeadshot url={player.headshotUrl} espnId={player.espnId} espnIdSource={player.espnIdSource} positionGroup={player.positionGroup} name={player.fullName} size="lg" />
           <div className="text-center">
-            <div className="text-xl font-bold tracking-tight">{player.fullName}</div>
-            <div className="text-sm text-muted-foreground">
-              {player.school} · {player.conference ?? "--"}
+            <div className="text-sm font-bold tracking-tight leading-tight md:text-xl">{player.fullName}</div>
+            <div className="text-xs text-muted-foreground truncate max-w-[9rem] md:max-w-none">
+              {player.school}
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="outline" className={POSITION_COLOR[player.position]}>
+          <div className="flex items-center gap-1.5 flex-wrap justify-center">
+            <Badge variant="outline" className={cn("text-xs", POSITION_COLOR[player.position])}>
               {player.position}
             </Badge>
-            <Badge variant="outline">{player.draftYear}</Badge>
+            <Badge variant="outline" className="text-xs">{player.draftYear}</Badge>
           </div>
-          <div className="grid grid-cols-3 gap-2 text-center text-xs">
+          <div className="grid grid-cols-3 gap-1 text-center text-xs w-full">
             <Stat label="HT" value={formatHeight(player.heightInches)} />
             <Stat label="WT" value={formatWeight(player.weightLbs)} />
             <Stat label="40" value={formatForty(player.fortyYard)} />
@@ -405,7 +408,7 @@ function ProspectButton({
           <Link
             href={`/player/${player.slug}`}
             onClick={(e) => e.stopPropagation()}
-            className="text-xs text-muted-foreground underline-offset-2 hover:underline"
+            className="hidden md:block text-xs text-muted-foreground underline-offset-2 hover:underline"
           >
             View full profile
           </Link>

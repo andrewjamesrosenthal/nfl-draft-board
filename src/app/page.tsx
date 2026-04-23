@@ -71,27 +71,27 @@ export default async function HomePage() {
               </span>
             )}
           </div>
-          <h1 className="font-display text-5xl md:text-7xl font-black tracking-tighter max-w-3xl leading-[1.02]">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter max-w-3xl leading-[1.02]">
             The NFL Draft board<br className="hidden md:inline" />
             <span className="gradient-text"> only you</span> could build.
           </h1>
-          <p className="text-muted-foreground md:text-lg max-w-2xl leading-relaxed">
+          <p className="text-muted-foreground text-sm md:text-lg max-w-2xl leading-relaxed">
             Compare prospects head to head, watch your rankings take shape in real time,
             and stack them against the community consensus.
           </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Link href="/compare" className="btn-brand inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-3">
+            <Link href="/compare" className="btn-brand inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold">
               <Swords className="h-4 w-4" /> Start comparing
             </Link>
             <Link
               href="/community"
-              className="inline-flex items-center gap-2 rounded-lg border border-border/70 bg-muted/20 px-5 py-3 text-sm font-medium text-foreground/90 transition-colors hover:border-brand/40 hover:text-foreground"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-border/70 bg-muted/20 px-5 py-3 text-sm font-medium text-foreground/90 transition-colors hover:border-brand/40 hover:text-foreground"
             >
               <Users className="h-4 w-4" /> Community board
             </Link>
             <Link
               href="/draft-order"
-              className="inline-flex items-center gap-2 rounded-lg px-3 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="hidden sm:inline-flex items-center gap-2 rounded-lg px-3 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <Radio className="h-4 w-4" /> Live draft order
             </Link>
@@ -107,14 +107,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <FeatureCard icon={Swords}        title="Pairwise arena"      href="/compare"     desc="Pick between two prospects. Your choices tune Elo ratings in real time." />
         <FeatureCard icon={ClipboardList} title="Your big board"      href="/board"       desc="See your rankings by position, team needs, or draft class. Pin manual overrides." />
         <FeatureCard icon={Users}         title="Community consensus" href="/community"   desc="Aggregated board from every voter, filtered by school, conference, testing." />
         <FeatureCard icon={Radio}         title="Live draft order"    href="/draft-order" desc="The live NFL Draft order, sourced from ESPN and linked to your board picks." />
       </section>
 
-      <section className="grid gap-6 md:grid-cols-2">
+      <section className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

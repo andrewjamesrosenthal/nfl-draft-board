@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* iPhone safe-area padding for home indicator */
+.h-safe-area-inset-bottom {
+  height: env(safe-area-inset-bottom, 0px);
+}
+
+/* Extra bottom padding for content behind the mobile nav bar */
+@media (max-width: 767px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
 @layer base {
   /* DARK is the default. The light overrides live under `.light`. A tiny
      inline script in layout.tsx applies the user's stored preference before
