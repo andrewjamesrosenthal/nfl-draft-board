@@ -47,6 +47,7 @@ export async function selectNextMatchup(
   userId: string,
   ctx: MatchupContext,
   pinnedId: number | null = null,
+  topN: number | null = null,
 ): Promise<MatchupResult | null> {
   // Pinned selection short-circuits every other mode. The pinned player goes
   // on the left; the opponent is a rating-neighbor inside the ctx pool that
@@ -77,8 +78,21 @@ export async function selectNextMatchup(
     return selectHistoricalMatchup(userId, ctx);
   }
 
-  const players = await fetchPlayers(ctx);
+  let players = await fetchPlayers(ctx);
   if (players.length < 2) return null;
+
+  // If topN is set, restrict the pool to the top N by community ranking.
+  if (topN != null && topN > 0) {
+    const topRankings = await db.communityRanking.findMany({
+      where: { draftYear: ctx.draftYear },
+      orderBy: { rankOverall: "asc" },
+      take: topN,
+      select: { playerId: true },
+    });
+    const topIds = new Set(topRankings.map((r) => r.playerId));
+    players = players.filter((p) => topIds.has(p.id));
+    if (players.length < 2) return null;
+  }
 
   const [existingRankings, communityRankings] = await Promise.all([
     db.userRanking.findMany({ where: { userId, draftYear: ctx.draftYear } }),

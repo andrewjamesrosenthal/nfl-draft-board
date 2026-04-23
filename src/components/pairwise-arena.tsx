@@ -39,10 +39,18 @@ const STAGE_LABEL: Record<AutoStage, { label: string; tip: string }> = {
 const DRAFT_YEARS = [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018];
 const HISTORICAL_YEARS = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
 
+const TOP_N_OPTIONS = [
+  { label: "All",   value: null },
+  { label: "Top 50",  value: 50 },
+  { label: "Top 100", value: 100 },
+  { label: "Top 150", value: 150 },
+];
+
 export function PairwiseArena() {
   const [year, setYear] = useState(2026);
   const [mode, setMode] = useState<Mode>("AUTO");
   const [position, setPosition] = useState<string>("WR");
+  const [topN, setTopN] = useState<number | null>(null);
   const [matchup, setMatchup] = useState<Matchup | null>(null);
   const [loading, setLoading] = useState(false);
   const [voteCount, setVoteCount] = useState(0);
@@ -77,6 +85,7 @@ export function PairwiseArena() {
     } else if (stickyId != null && stickyRemaining > 0) {
       params.set("stickyId", String(stickyId));
     }
+    if (topN != null) params.set("topN", String(topN));
     const res = await fetch(`/api/pairwise/next?${params.toString()}`);
     const json = await res.json();
     setMatchup(json.matchup ?? null);
@@ -85,7 +94,7 @@ export function PairwiseArena() {
       setStreak(json.stats.streak ?? 0);
     }
     setLoading(false);
-  }, [mode, position, year, lockedPlayer, stickyId, stickyRemaining]);
+  }, [mode, position, year, lockedPlayer, stickyId, stickyRemaining, topN]);
 
   useEffect(() => {
     void fetchNext();
@@ -210,6 +219,25 @@ export function PairwiseArena() {
             </Select>
           </div>
         )}
+        {/* Top N filter chips */}
+        <div className="flex items-center gap-1 flex-wrap">
+          {TOP_N_OPTIONS.map((opt) => (
+            <button
+              key={String(opt.value)}
+              type="button"
+              onClick={() => setTopN(opt.value)}
+              className={cn(
+                "rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors",
+                topN === opt.value
+                  ? "border-brand/60 bg-brand/10 text-foreground"
+                  : "border-border/50 text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
         <div className="ml-auto flex items-center gap-2">
           <button
             type="button"

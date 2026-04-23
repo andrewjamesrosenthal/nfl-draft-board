@@ -18,6 +18,8 @@ const querySchema = z.object({
   stickyId: z.coerce.number().int().optional(),
   // Lock a player into every matchup until unlocked.
   lockedId: z.coerce.number().int().optional(),
+  // Restrict the player pool to the top N by community ranking.
+  topN: z.coerce.number().int().min(10).max(500).optional(),
 });
 
 export async function GET(req: Request) {
@@ -35,7 +37,7 @@ export async function GET(req: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
-  const { mode, position, group, year, historicalYears, stickyId, lockedId } = parsed.data;
+  const { mode, position, group, year, historicalYears, stickyId, lockedId, topN } = parsed.data;
 
   let ctx: MatchupContext;
   if (mode === "POSITION" && position) {
@@ -63,7 +65,7 @@ export async function GET(req: Request) {
   // Pinning overrides stage selection: a locked or sticky player is always in
   // the next matchup. Opponent selection still respects the context window.
   const pinnedId = lockedId ?? stickyId ?? null;
-  const matchup = await selectNextMatchup(userId, ctx, pinnedId);
+  const matchup = await selectNextMatchup(userId, ctx, pinnedId, topN ?? null);
   if (!matchup) {
     return NextResponse.json({ matchup: null, stats: await userStats(userId) });
   }

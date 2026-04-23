@@ -13,7 +13,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force && npm run db:seed",
     "db:studio": "prisma studio",
-    "db:setup:prod": "prisma db push && tsx prisma/seed.ts"
+    "db:setup:prod": "prisma db push && tsx prisma/seed.ts",
+    "db:seed-votes": "tsx scripts/seed-community-votes.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
