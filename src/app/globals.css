@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* DARK is the default. The light overrides live under `.light`. A tiny
+     inline script in layout.tsx applies the user's stored preference before
+     the first paint so there's no flash. */
+  :root {
+    --background: 222 36% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 32% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 15% 70%;
+
+    --accent: 190 95% 55%;
+    --accent-foreground: 190 95% 10%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222 36% 5%;
+
+    --secondary: 222 24% 14%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 62%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 190 95% 55%;
+
+    --radius: 0.875rem;
+
+    --brand: 190 95% 55%;
+    --brand-2: 300 90% 60%;
+    --brand-foreground: 190 40% 8%;
+
+    /* Light-theme-only tokens. On dark they match the dark equivalents so
+       utilities can reference them unconditionally. */
+    --grain-opacity: 0.5;
+  }
+
+  .light {
+    --background: 210 30% 98%;
+    --foreground: 222 32% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 32% 12%;
+
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 190 85% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --primary: 222 36% 10%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 32% 12%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 190 85% 40%;
+
+    --brand: 190 85% 40%;
+    --brand-2: 300 70% 50%;
+    --brand-foreground: 0 0% 100%;
+
+    --grain-opacity: 0.18;
+  }
+
+  html, body {
+    background:
+      radial-gradient(1100px 600px at 8% -10%,  hsl(var(--brand) / 0.10), transparent 60%),
+      radial-gradient(900px  500px at 100% 0%,  hsl(var(--brand-2) / 0.09), transparent 60%),
+      radial-gradient(700px  400px at 50% 110%, hsl(222 70% 55% / 0.07), transparent 60%),
+      hsl(var(--background));
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv11", "ss01", "ss03";
+  }
+  .light body {
+    /* Slightly deeper washes on light — the same opacities that look subtle
+       on dark are nearly invisible on a white background. */
+    background:
+      radial-gradient(1100px 600px at 8% -10%,  hsl(var(--brand) / 0.18), transparent 65%),
+      radial-gradient(900px  500px at 100% 0%,  hsl(var(--brand-2) / 0.14), transparent 65%),
+      radial-gradient(700px  400px at 50% 110%, hsl(222 70% 70% / 0.15), transparent 65%),
+      hsl(var(--background));
+  }
+
+  /* Subtle film-grain so flat areas don't look muddy. Light mode dials it
+     way down — grain on white is ugly. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.035 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+    opacity: var(--grain-opacity);
+  }
+
+  /* Keep borders subtle but visible on dark. */
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  h1, h2, h3 { letter-spacing: -0.02em; }
+
+  /* Page content sits above the grain overlay. */
+  header, main, footer { position: relative; z-index: 1; }
+}
+
+@layer components {
+  /* Frosted-glass surface (nav, hero overlay, elevated cards). */
+  .glass {
+    background: linear-gradient(180deg, hsl(220 30% 100% / 0.04), hsl(220 30% 100% / 0.015));
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
+  .light .glass {
+    background: linear-gradient(180deg, hsl(0 0% 100% / 0.72), hsl(0 0% 100% / 0.55));
+  }
+
+  /* Premium card: inner highlight + deep shadow. Swapped for light mode. */
+  .card-lux {
+    background:
+      linear-gradient(180deg, hsl(222 30% 12% / 0.85), hsl(222 34% 7% / 0.85));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.04),
+      0 1px 0 hsl(0 0% 0% / 0.4),
+      0 20px 40px -20px hsl(222 80% 2% / 0.8);
+  }
+  .light .card-lux {
+    background:
+      linear-gradient(180deg, hsl(0 0% 100% / 0.98), hsl(210 30% 99% / 0.9));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.9),
+      0 1px 0 hsl(220 20% 70% / 0.15),
+      0 12px 32px -20px hsl(222 40% 30% / 0.18);
+  }
+
+  /* Hover elevation used on rows + prospect cards. */
+  .hover-lift {
+    transition: transform .2s cubic-bezier(.2,.8,.2,1),
+                box-shadow .2s ease,
+                border-color .2s ease,
+                background-color .2s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 40px -14px hsl(var(--brand) / 0.28),
+      0 2px 0 hsl(0 0% 0% / 0.35),
+      inset 0 1px 0 hsl(0 0% 100% / 0.05);
+    border-color: hsl(var(--brand) / 0.45);
+  }
+  .light .hover-lift:hover {
+    box-shadow:
+      0 14px 40px -18px hsl(var(--brand) / 0.35),
+      0 2px 0 hsl(220 20% 70% / 0.12),
+      inset 0 1px 0 hsl(0 0% 100% / 0.9);
+    border-color: hsl(var(--brand) / 0.45);
+  }
+
+  /* Dual-accent gradient text. */
+  .gradient-text {
+    background: linear-gradient(92deg,
+      hsl(var(--brand)) 0%,
+      hsl(220 100% 80%) 40%,
+      hsl(var(--brand-2)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 24px hsl(var(--brand) / 0.25));
+  }
+
+  /* Thin animated accent bar for cards. */
+  .stripe {
+    background: linear-gradient(90deg,
+      hsl(var(--brand))   0%,
+      hsl(220 90% 70%)   50%,
+      hsl(var(--brand-2)) 100%);
+    background-size: 200% 100%;
+    animation: stripe-slide 8s ease-in-out infinite;
+  }
+  @keyframes stripe-slide {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  /* Chrome button style for primary CTAs. */
+  .btn-brand {
+    background: linear-gradient(180deg, hsl(var(--brand) / 0.95), hsl(var(--brand) / 0.75));
+    color: hsl(var(--brand-foreground));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.35),
+      0 8px 24px -8px hsl(var(--brand) / 0.6);
+    transition: transform .12s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  .btn-brand:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-brand:active { transform: translateY(0); filter: brightness(0.95); }
+
+  /* Inline chip / pill style used all over the board. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    line-height: 1.25;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--muted) / 0.5);
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Section divider with gradient accent. */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
+}
+
+@layer utilities {
+  /* Tabular numbers for ratings/ranks. */
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* Hide native scrollbar on horizontally-scrolling nav/filter rails.
+     Firefox via scrollbar-width, WebKit via pseudo-element. */
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; width: 0; height: 0; }
+}

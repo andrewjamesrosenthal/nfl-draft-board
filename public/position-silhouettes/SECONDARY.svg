@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="sec" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2a2a"/>
+      <stop offset="1" stop-color="#0a1414"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#sec)"/>
+  <g fill="#a5f3fc" opacity="0.85">
+    <circle cx="100" cy="66" r="22"/>
+    <path d="M58 185c0-22 18-42 42-42s42 20 42 42z"/>
+  </g>
+  <text x="100" y="195" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="10" font-weight="700" fill="#164e63">SECONDARY</text>
+</svg>

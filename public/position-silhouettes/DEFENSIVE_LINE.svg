@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="dl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a1c20"/>
+      <stop offset="1" stop-color="#140a0c"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#dl)"/>
+  <g fill="#fecaca" opacity="0.85">
+    <circle cx="100" cy="62" r="26"/>
+    <path d="M54 185c0-26 20-46 46-46s46 20 46 46z"/>
+    <path d="M46 120l-6 18 12 4 6-18z"/>
+    <path d="M160 120l6 18-12 4-6-18z"/>
+  </g>
+  <text x="100" y="195" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="10" font-weight="700" fill="#7f1d1d">D-LINE</text>
+</svg>

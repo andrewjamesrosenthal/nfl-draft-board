@@ -1,0 +1,415 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// All enum-typed fields are stored as String (no Prisma enums needed).
+
+model DraftClass {
+  id            Int       @id @default(autoincrement())
+  year          Int       @unique
+  name          String
+  isCurrent     Boolean   @default(false)
+  draftDate     DateTime?
+  createdAt     DateTime  @default(now())
+
+  players       Player[]
+  mocks         MockDraft[]
+}
+
+model Player {
+  id             Int       @id @default(autoincrement())
+  slug           String    @unique
+  firstName      String
+  lastName       String
+  fullName       String
+  position       String    // Position union
+  positionGroup  String    // PositionGroup union
+  school         String
+  conference     String?
+  draftYear      Int
+  draftClass     DraftClass @relation(fields: [draftYear], references: [year])
+
+  heightInches   Int?
+  weightLbs      Int?
+  armInches      Float?
+  handInches     Float?
+  wingspanInches Float?
+
+  fortyYard      Float?
+  tenYardSplit   Float?
+  verticalIn     Float?
+  broadJumpIn    Float?
+  threeConeSec   Float?
+  shuttleSec     Float?
+  benchReps      Int?
+
+  age            Float?
+  hometown       String?
+  jerseyNumber   String?
+
+  actualPick     Int?
+  actualRound    Int?
+  actualTeamAbbr String?
+
+  espnId         String?   // ESPN athlete ID — used for headshot cascade (nfl → college-football → silhouette)
+  espnIdSource   String?   // "nfl" | "college-football" — which ESPN image bucket to hit first
+  headshotUrl    String?
+  highlightUrl   String?
+
+  isProspect     Boolean   @default(true)
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  images         PlayerImage[]
+  stats          PlayerStat[]
+  reports        ScoutingReport[]
+
+  matchupsLeft   PairwiseMatchup[] @relation("MatchupLeft")
+  matchupsRight  PairwiseMatchup[] @relation("MatchupRight")
+  matchupsWon    PairwiseMatchup[] @relation("MatchupWinner")
+
+  userRankings      UserRanking[]
+  communityRanking  CommunityRanking?
+  snapshots         RankingSnapshot[]
+  mockPicks         MockDraftPick[]
+  watchlistEntries  WatchlistEntry[]
+
+  gradeMatchupsLeft   PickGradeMatchup[] @relation("GradeLeft")
+  gradeMatchupsRight  PickGradeMatchup[] @relation("GradeRight")
+  gradeMatchupsWon    PickGradeMatchup[] @relation("GradeWinner")
+  pickGrades          PickGrade[]
+  communityPickGrade  CommunityPickGrade?
+
+  @@index([draftYear])
+  @@index([position])
+  @@index([positionGroup])
+}
+
+model PlayerImage {
+  id        Int     @id @default(autoincrement())
+  playerId  Int
+  url       String
+  alt       String?
+  isPrimary Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  player    Player  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+}
+
+model PlayerStat {
+  id        Int     @id @default(autoincrement())
+  playerId  Int
+  season    Int
+  label     String
+  value     String
+  createdAt DateTime @default(now())
+
+  player    Player  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId, season])
+}
+
+model ScoutingReport {
+  id         Int      @id @default(autoincrement())
+  playerId   Int
+  source     String   @default("INTERNAL")  // ReportSource union
+  authorId   String?
+  summary    String
+  strengths  String   @default("[]")         // JSON-encoded string array
+  weaknesses String   @default("[]")         // JSON-encoded string array
+  nflComp    String?
+  grade      Float?
+  version    Int      @default(1)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  player     Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId])
+}
+
+model User {
+  id            String    @id
+  handle        String?   @unique
+  displayName   String?
+  email         String?   @unique
+  isAnonymous   Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  lastSeen      DateTime  @default(now())
+
+  matchups      PairwiseMatchup[]
+  rankings      UserRanking[]
+  snapshots     RankingSnapshot[]
+  mocks         MockDraft[]
+  watchlist     WatchlistEntry[]
+  overrides     UserRankingOverride[]
+  badges        UserBadge[]
+  gradeMatchups PickGradeMatchup[]
+  pickGrades    PickGrade[]
+}
+
+model UserBadge {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  key       String
+  earnedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, key])
+}
+
+model WatchlistEntry {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  playerId  Int
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, playerId])
+}
+
+model PairwiseMatchup {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  leftId     Int
+  rightId    Int
+  winnerId   Int?
+  skipped    Boolean  @default(false)
+  context    String?
+  draftYear  Int
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  left       Player   @relation("MatchupLeft",   fields: [leftId],   references: [id])
+  right      Player   @relation("MatchupRight",  fields: [rightId],  references: [id])
+  winner     Player?  @relation("MatchupWinner", fields: [winnerId], references: [id])
+
+  @@index([userId, draftYear])
+  @@index([leftId, rightId])
+}
+
+model UserRanking {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  playerId    Int
+  draftYear   Int
+  rating      Float    @default(1500)
+  sigma       Float    @default(350)
+  comparisons Int      @default(0)
+  wins        Int      @default(0)
+  losses      Int      @default(0)
+  source      String   @default("ALGO")   // RankingSource union
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, playerId, draftYear])
+  @@index([userId, draftYear])
+}
+
+model UserRankingOverride {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  playerId   Int
+  draftYear  Int
+  manualRank Int
+  note       String?
+  updatedAt  DateTime @updatedAt
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, playerId, draftYear])
+}
+
+model CommunityRanking {
+  id          Int      @id @default(autoincrement())
+  playerId    Int      @unique
+  draftYear   Int
+  rating      Float    @default(1500)
+  sigma       Float    @default(350)
+  comparisons Int      @default(0)
+  rankOverall Int?
+  rankPos     Int?
+  trend7d     Float    @default(0)
+  updatedAt   DateTime @updatedAt
+
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([draftYear])
+}
+
+model RankingSnapshot {
+  id        Int      @id @default(autoincrement())
+  userId    String?
+  playerId  Int
+  draftYear Int
+  rating    Float
+  rankOverall Int?
+  capturedAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([playerId, capturedAt])
+  @@index([userId, capturedAt])
+}
+
+model Team {
+  id         Int      @id @default(autoincrement())
+  abbr       String   @unique
+  name       String
+  city       String
+  conference String
+  division   String
+  primaryHex String   @default("#222222")
+  secondaryHex String @default("#ffffff")
+  logoEmoji  String?
+  createdAt  DateTime @default(now())
+
+  needs      TeamNeed[]
+}
+
+model TeamNeed {
+  id        Int      @id @default(autoincrement())
+  teamId    Int
+  position  String   // Position union
+  priority  Int
+  draftYear Int
+  note      String?
+
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, position, draftYear])
+  @@index([draftYear])
+}
+
+// Cache of ESPN-sourced draft order. Refreshed by /api/cron/draft-order daily.
+// One row per (draftYear, overallPick). Player may be null until the pick is on the clock.
+model DraftOrderPick {
+  id              Int      @id @default(autoincrement())
+  draftYear       Int
+  overallPick     Int
+  round           Int
+  pickInRound     Int
+  teamAbbr        String
+  teamName        String?
+  teamLogoUrl     String?
+  isOnTheClock    Boolean  @default(false)
+  isCompleted     Boolean  @default(false)
+  playerId        Int?
+  selectedAthlete String?  // player name (populated before we link by ESPN ID)
+  espnAthleteId   String?
+  tradedFromAbbr  String?
+  fetchedAt       DateTime @default(now())
+
+  @@unique([draftYear, overallPick])
+  @@index([draftYear])
+}
+
+model MockDraft {
+  id          String       @id @default(cuid())
+  userId      String?
+  draftYear   Int
+  draftClass  DraftClass   @relation(fields: [draftYear], references: [year])
+  mode        String       @default("ONE_ROUND")    // MockMode union
+  control     String       @default("SINGLE_TEAM")  // MockControl union
+  userTeamAbbr String?
+  boardSource String       @default("personal")
+  title       String?
+  shareSlug   String       @unique @default(cuid())
+  grade       Float?
+  createdAt   DateTime     @default(now())
+  completedAt DateTime?
+
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  picks       MockDraftPick[]
+
+  @@index([userId])
+  @@index([draftYear])
+}
+
+model MockDraftPick {
+  id            Int      @id @default(autoincrement())
+  mockId        String
+  overallPick   Int
+  round         Int
+  teamAbbr      String
+  playerId      Int?
+  byUser        Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  mock          MockDraft @relation(fields: [mockId], references: [id], onDelete: Cascade)
+  player        Player?   @relation(fields: [playerId], references: [id])
+
+  @@unique([mockId, overallPick])
+  @@index([mockId])
+}
+
+// ---------------------------------------------------------------------------
+// Pick Grader — pairwise grading of actual draft picks (unlocks after Round 1)
+// ---------------------------------------------------------------------------
+
+// One Elo rating per (user, drafted player). Each comparison updates two rows.
+model PickGrade {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  playerId    Int
+  draftYear   Int
+  rating      Float    @default(1500)
+  sigma       Float    @default(350)
+  comparisons Int      @default(0)
+  wins        Int      @default(0)
+  losses      Int      @default(0)
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, playerId])
+  @@index([userId, draftYear])
+}
+
+// Head-to-head pick matchup recorded for each comparison.
+model PickGradeMatchup {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  leftId     Int
+  rightId    Int
+  winnerId   Int?
+  skipped    Boolean  @default(false)
+  draftYear  Int
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  left       Player   @relation("GradeLeft",   fields: [leftId],   references: [id])
+  right      Player   @relation("GradeRight",  fields: [rightId],  references: [id])
+  winner     Player?  @relation("GradeWinner", fields: [winnerId], references: [id])
+
+  @@index([userId, draftYear])
+  @@index([leftId, rightId])
+}
+
+// Community (aggregate) rating for each drafted pick.
+model CommunityPickGrade {
+  id          Int      @id @default(autoincrement())
+  playerId    Int      @unique
+  draftYear   Int
+  rating      Float    @default(1500)
+  comparisons Int      @default(0)
+  rankOverall Int?
+  updatedAt   DateTime @updatedAt
+
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([draftYear])
+}

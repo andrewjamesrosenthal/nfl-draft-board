@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="ol" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c2533"/>
+      <stop offset="1" stop-color="#0b1220"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#ol)"/>
+  <g fill="#e2e8f0" opacity="0.85">
+    <circle cx="100" cy="60" r="28"/>
+    <path d="M50 185c0-28 22-50 50-50s50 22 50 50z"/>
+  </g>
+  <text x="100" y="195" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="10" font-weight="700" fill="#64748b">O-LINE</text>
+</svg>

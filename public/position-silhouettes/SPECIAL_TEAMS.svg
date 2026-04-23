@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="st" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#24251c"/>
+      <stop offset="1" stop-color="#0f100a"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#st)"/>
+  <g fill="#fde68a" opacity="0.85">
+    <circle cx="100" cy="66" r="22"/>
+    <path d="M58 185c0-22 18-42 42-42s42 20 42 42z"/>
+    <ellipse cx="100" cy="125" rx="8" ry="5" fill="#1f2937"/>
+  </g>
+  <text x="100" y="195" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="10" font-weight="700" fill="#713f12">SPECIAL</text>
+</svg>

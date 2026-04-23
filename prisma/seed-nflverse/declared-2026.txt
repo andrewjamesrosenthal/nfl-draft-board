@@ -1,0 +1,472 @@
+1	Fernando Mendoza	Indiana	Jr	QB	1	6-5	236
+2	Rueben Bain Jr.	Miami (Fla.)	Jr	EDGE	1	6-2	263
+3	Arvell Reese	Ohio State	Jr	EDGE	2	6-4	243
+4	Kadyn Proctor	Alabama	Jr	OT	1	6-7	352
+5	Spencer Fano	Utah	Jr	OT	2	6-6	311
+6	Jermod McCoy	Tennessee	Jr	CB	1	6-1	188
+7	Jeremiyah Love	Notre Dame	Jr	RB	1	6-0	214
+8	Caleb Downs	Ohio State	Jr	S	1	6-0	205
+9	Sonny Styles	Ohio State	Sr	LB	1	6-5	243
+10	Avieon Terrell	Clemson	Jr	CB	2	5-11	180
+11	Ty Simpson	Alabama	Jr	QB	2	6-1	211
+12	KC Concepcion	Texas A&M	Jr	WR	1	6-0	196
+13	Caleb Lomu	Utah	Soph	OT	3	6-6	308
+14	Mansoor Delane	LSU	Sr	CB	3	6-0	187
+15	Olaivavega Ioane	Penn State	Jr	IOL	1	6-4	323
+16	Francis Mauigoa	Miami (Fla.)	Jr	OT	4	6-6	329
+17	Makai Lemon	USC	Jr	WR	2	5-11	192
+18	Carnell Tate	Ohio State	Jr	WR	3	6-2	192
+19	Peter Woods	Clemson	Jr	DL	1	6-3	298
+20	David Bailey	Texas Tech	Sr	EDGE	3	6-4	250
+21	Omar Cooper Jr.	Indiana	Jr	WR	4	6-0	199
+22	Emmanuel McNeil-Warren	Toledo	Sr	S	2	6-4	202
+23	Jordyn Tyson	Arizona St.	Jr	WR	5	6-2	203
+24	Kenyon Sadiq	Oregon	Jr	TE	1	6-3	241
+25	Monroe Freeling	Georgia	Jr	OT	5	6-7	315
+26	D'Angelo Ponds	Indiana	Jr	CB	4	5-9	182
+27	Chris Johnson	San Diego St.	Sr	CB	5	6-0	195
+28	Lee Hunter	Texas Tech	Sr	DL	2	6-4	318
+29	Blake Miller	Clemson	Sr	OT	6	6-7	317
+30	Akheem Mesidor	Miami (Fla.)	Sr	EDGE	4	6-3	259
+31	Max Iheanachor	Arizona St.	Sr	OT	7	6-6	321
+32	Kayden McDonald	Ohio State	Jr	DL	3	6-2	326
+33	Cashius Howell	Texas A&M	Sr	EDGE	5	6-3	253
+34	Gabe Jacas	Illinois	Sr	EDGE	6	6-4	260
+35	Treydan Stukes	Arizona	Sr	CB	6	6-1	190
+36	Keylan Rutledge	Georgia Tech	Sr	IOL	2	6-4	316
+37	R Mason Thomas	Oklahoma	Sr	EDGE	7	6-2	241
+38	Jake Golday	Cincinnati	Sr	LB	2	6-5	240
+39	Chase Bisontis	Texas A&M	Jr	IOL	3	6-5	315
+40	Germie Bernard	Alabama	Sr	WR	6	6-1	204
+41	Josiah Trotter	Missouri	Soph	LB	3	6-2	237
+42	Antonio Williams	Clemson	Jr	WR	7	6-0	187
+43	Connor Lew	Auburn	Jr	IOL	4	6-4	310
+44	Keith Abney II	Arizona St.	Jr	CB	7	5-10	187
+45	Denzel Boston	Washington	Jr	WR	8	6-4	210
+46	Keldric Faulk	Auburn	Jr	EDGE	8	6-6	276
+47	Dillon Thieneman	Oregon	Soph	S	3	6-0	201
+48	CJ Allen	Georgia	Jr	LB	4	6-1	230
+49	Trey Zuhn III	Texas A&M	Sr	IOL	5	6-7	312
+50	Brenen Thompson	Miss. State	Sr	WR	9	5-9	164
+51	Brandon Cisse	South Carolina	Jr	CB	8	6-0	190
+52	Malachi Lawrence	UCF	Sr	LB	5	6-4	253
+53	Caleb Tiernan	Northwestern	Sr	OT	8	6-8	323
+54	Keyron Crawford	Auburn	Sr	EDGE	9	6-4	255
+55	Jacob Rodriguez	Texas Tech	Sr	LB	6	6-1	231
+56	Christen Miller	Georgia	Jr	DL	4	6-4	321
+57	Anthony Hill Jr.	Texas	Jr	LB	7	6-2	238
+58	Sam Hecht	Kansas State	Sr	IOL	6	6-4	300
+59	Colton Hood	Tennessee	Soph	CB	9	6-0	195
+60	Kyle Louis	Pittsburgh	Jr	LB	8	6-0	220
+61	Genesis Smith	Arizona	Jr	S	4	6-2	204
+62	Jadarian Price	Notre Dame	Jr	RB	2	5-11	203
+63	Malachi Fields	Notre Dame	Sr	WR	10	6-5	218
+64	A.J. Haulcy	LSU	Sr	S	5	6-0	215
+65	Emmanuel Pregnon	Oregon	Sr	IOL	7	6-4	314
+66	Jaishawn Barham	Michigan	Sr	LB	9	6-4	240
+67	Max Klare	Ohio State	Jr	TE	2	6-4	246
+68	Keionte Scott	Miami (Fla.)	Sr	S	6	5-11	193
+69	Garrett Nussmeier	LSU	Sr	QB	3	6-2	203
+70	Ephesians Prysock	Washington	Sr	CB	10	6-1	210
+71	Kaleb Proctor	SE Louisiana	Sr	DL	5	6-2	291
+72	Derrick Moore	Michigan	Sr	EDGE	10	6-4	255
+73	Cole Payton	N. Dakota St.	Sr	QB	4	6-3	233
+74	Zachariah Branch	Georgia	Jr	WR	11	5-9	177
+75	T.J. Parker	Clemson	Jr	EDGE	11	6-4	263
+76	Bud Clark	TCU	Sr	S	7	6-2	190
+77	Gracen Halton	Oklahoma	Sr	DL	6	6-2	292
+78	Romello Height	Texas Tech	Sr	EDGE	12	6-3	240
+79	Travis Burke	Memphis	Sr	OT	9	6-9	315
+80	Chris McClellan	Missouri	Sr	DL	7	6-4	313
+81	Daylen Everette	Georgia	Sr	CB	11	6-1	196
+82	Jadon Canady	Oregon	Sr	CB	12	5-11	181
+83	Cyrus Allen	Cincinnati	Sr	WR	12	5-11	180
+84	Chris Brazzell II	Tennessee	Jr	WR	13	6-4	198
+85	Austin Barber	Florida	Sr	OT	10	6-7	318
+86	Nate Boerkircher	Texas A&M	Sr	TE	3	6-6	245
+87	Billy Schrauth	Notre Dame	Jr	IOL	8	6-5	310
+88	Keagen Trost	Missouri	Sr	IOL	9	6-5	311
+89	Domonique Orange	Iowa St.	Sr	DL	8	6-2	322
+90	Markel Bell	Miami (Fla.)	Sr	OT	11	6-9	345
+91	Eli Stowers	Vanderbilt	Sr	TE	4	6-4	239
+92	Caleb Banks	Florida	Sr	DL	9	6-6	327
+93	Malik Muhammad	Texas	Jr	CB	13	6-0	182
+94	Joshua Josephs	Tennessee	Sr	EDGE	13	6-3	240
+95	Alex Harkey	Oregon	Sr	IOL	10	6-6	308
+96	Parker Brailsford	Alabama	Jr	IOL	11	6-2	290
+97	Jayden Loving	Wake Forest	Sr	DL	10	6-2	317
+98	Carver Willis	Washington	Sr	OT	12	6-5	303
+99	Zion Young	Missouri	Sr	EDGE	14	6-6	262
+100	Anthony Lucas	USC	Sr	EDGE	15	6-6	256
+101	Elijah Sarratt	Indiana	Sr	WR	14	6-3	210
+102	Eli Heidenreich	Navy	Sr	RB	3	6-0	198
+103	Jimmy Rolder	Michigan	Sr	LB	10	6-2	240
+104	Sam Roush	Stanford	Sr	TE	5	6-5	260
+105	Rayshaun Benny	Michigan	Sr	DL	11	6-3	298
+106	Eric Rivers	Georgia Tech	Sr	WR	15	5-10	176
+107	Chandler Rivers	Duke	Sr	CB	14	5-10	185
+108	Dani Dennis-Sutton	Penn State	Sr	EDGE	16	6-6	256
+109	Kevin Coleman Jr.	Missouri	Sr	WR	16	5-10	180
+110	Jake Slaughter	Florida	Sr	IOL	12	6-5	303
+111	Jalen Farmer	Kentucky	Jr	IOL	13	6-5	318
+112	Tyler Onyedim	Texas A&M	Sr	DL	12	6-3	295
+113	Julian Neal	Arkansas	Sr	CB	15	6-2	203
+114	Chris Bell	Louisville	Sr	WR	17	6-2	220
+115	Devin Moore	Florida	Sr	CB	16	6-3	198
+116	Kaytron Allen	Penn State	Sr	RB	4	5-11	219
+117	Taylen Green	Arkansas	Sr	QB	5	6-6	227
+118	Nick Barrett	South Carolina	Sr	DL	13	6-3	312
+119	Ja'Kobi Lane	USC	Jr	WR	18	6-4	200
+120	De'Zhaun Stribling	Ole Miss	Sr	WR	19	6-2	207
+121	Oscar Delp	Georgia	Sr	TE	6	6-5	245
+122	Keyshaun Elliott	Arizona St.	Sr	LB	11	6-2	235
+123	Jackson Kuwatch	Miami-OH	Sr	LB	12	6-4	232
+124	Justin Joly	NC State	Sr	TE	7	6-3	263
+125	Eric McAlister	TCU	Sr	WR	20	6-4	194
+126	Jager Burton	Kentucky	Sr	IOL	14	6-4	312
+127	Mason Reiger	Wisconsin	Sr	LB	13	6-5	251
+128	Jonah Coleman	Washington	Sr	RB	5	5-8	220
+129	Will Kacmarek	Ohio State	Sr	TE	8	6-6	261
+130	Gavin Ortega	Weber St.	Sr	OT	13	6-5	300
+131	Jude Bowry	Boston College	Jr	OT	14	6-5	314
+132	Jalon Kilgore	South Carolina	Jr	S	8	6-1	210
+133	Colbie Young	Georgia	Sr	WR	21	6-5	218
+134	Febechi Nwaiwu	Oklahoma	Sr	IOL	15	6-4	319
+135	Dontay Corleone	Cincinnati	Sr	DL	14	6-1	340
+136	Skyler Bell	UConn	Sr	WR	22	6-0	185
+137	Kaleb Elarms-Orr	TCU	Sr	LB	14	6-2	234
+138	David Gusta	Kentucky	Sr	DL	15	6-2	308
+139	Kamari Ramsey	USC	Jr	S	9	6-0	202
+140	Albert Regis	Texas A&M	Sr	DL	16	6-1	317
+141	Dallen Bentley	Utah	Sr	TE	9	6-4	259
+142	Vinny Anthony II	Wisconsin	Sr	WR	23	6-0	183
+143	Seth McGowan	Kentucky	Sr	RB	6	6-1	215
+144	Demond Claiborne	Wake Forest	Sr	RB	7	5-10	188
+145	Logan Jones	Iowa	Sr	IOL	16	6-3	299
+146	Ar'maj Reed-Adams	Texas A&M	Sr	IOL	17	6-6	314
+147	Tacario Davis	Washington	Sr	CB	17	6-4	200
+148	Eli Raridon	Notre Dame	Sr	TE	10	6-6	245
+149	Deion Burks	Oklahoma	Sr	WR	24	5-9	188
+150	Bakyne Coly	Purdue	Sr	OT	15	6-7	300
+151	Red Murdock	Buffalo	Sr	LB	15	6-1	240
+152	Mike Washington Jr.	Arkansas	Sr	RB	8	6-2	228
+153	Dametrious Crownover	Texas A&M	Sr	OT	16	6-7	336
+154	Bryce Lance	N. Dakota St.	Sr	WR	25	6-3	209
+155	Ted Hurst	Georgia St.	Sr	WR	26	6-3	195
+156	Zakee Wheatley	Penn State	Sr	S	10	6-3	203
+157	Drew Allar	Penn State	Sr	QB	6	6-5	235
+158	Nadame Tucker	W. Michigan	Sr	EDGE	17	6-2	247
+159	DeVonta Smith	Notre Dame	Sr	CB	18	5-11	195
+160	Kendrick Law	Kentucky	Sr	WR	27	5-11	203
+161	Brian Parker II	Duke	Jr	IOL	18	6-5	309
+162	Fernando Carmona	Arkansas	Sr	IOL	19	6-5	316
+163	Will Lee III	Texas A&M	Sr	CB	19	6-2	189
+164	Zxavian Harris	Ole Miss	Sr	DL	17	6-8	330
+165	Michael Trigg	Baylor	Sr	TE	11	6-4	240
+166	Gennings Dunker	Iowa	Sr	IOL	20	6-5	319
+167	Jeff Caldwell	Cincinnati	Sr	WR	28	6-5	215
+168	Jeremiah Wright	Auburn	Sr	IOL	21	6-5	331
+169	Matt Gulbin	Michigan St.	Sr	IOL	22	6-4	305
+170	Davison Igbinosun	Ohio State	Sr	CB	20	6-2	189
+171	Drew Shelton	Penn State	Sr	OT	17	6-5	313
+172	Andre Fuller	Toledo	Sr	CB	21	6-1	200
+173	Emmett Johnson	Nebraska	Jr	RB	9	5-11	200
+174	Caden Curry	Ohio State	Sr	EDGE	18	6-3	260
+175	J.C. Davis	Illinois	Sr	OT	18	6-4	322
+176	Harold Perkins Jr.	LSU	Jr	LB	16	6-1	222
+177	Taurean York	Texas A&M	Jr	LB	17	5-10	227
+178	Jack Endries	Texas	Jr	TE	12	6-5	245
+179	Reggie Virgil	Texas Tech	Sr	WR	29	6-3	190
+180	Logan Taylor	Boston College	Sr	IOL	23	6-7	314
+181	Zane Durant	Penn State	Sr	DL	18	6-1	290
+182	Skyler Gill-Howard	Texas Tech	Sr	DL	19	6-1	290
+183	Isaiah World	Oregon	Sr	OT	19	6-8	318
+184	Clay Patterson	Stanford	Sr	DL	20	6-3	280
+185	Marlin Klein	Michigan	Sr	TE	13	6-6	250
+186	Joe Royer	Cincinnati	Sr	TE	14	6-5	247
+187	Lance Mason	Wisconsin	Sr	TE	15	6-4	250
+188	Jordan van den Berg	Georgia Tech	Sr	DL	21	6-3	310
+189	Kage Casey	Boise St.	Jr	IOL	24	6-6	310
+190	DeMonte Capehart	Clemson	Sr	DL	22	6-5	315
+191	Deontae Lawson	Alabama	Sr	LB	18	6-2	228
+192	Pat Coogan	Indiana	Sr	IOL	25	6-5	311
+193	Beau Stephens	Iowa	Sr	IOL	26	6-5	315
+194	Adam Randall	Clemson	Sr	RB	10	6-3	232
+195	Darrell Jackson Jr.	Florida State	Sr	DL	23	6-6	315
+196	LT Overton	Alabama	Sr	DL	24	6-3	274
+197	Zavion Thomas	LSU	Sr	WR	30	5-10	192
+198	Josh Cuevas	Alabama	Sr	TE	16	6-3	245
+199	Hezekiah Masses	California	Sr	CB	22	6-1	185
+200	Bishop Fitzgerald	USC	Sr	S	11	5-11	205
+201	Aaron Anderson	LSU	Jr	WR	31	5-8	188
+202	Carson Beck	Miami (Fla.)	Sr	QB	7	6-4	225
+203	Robert Henry Jr.	UTSA	Sr	RB	11	5-9	205
+204	Robert Spears-Jennings	Oklahoma	Sr	S	12	6-2	205
+205	Tyreak Sapp	Florida	Sr	LB	19	6-2	274
+206	Dae'Quan Wright	Ole Miss	Sr	TE	17	6-4	255
+207	VJ Payne	Kansas State	Sr	S	13	6-3	208
+208	Tyren Montgomery	John Carroll	Jr	WR	32	6-1	185
+209	Jakobe Thomas	Miami (Fla.)	Sr	S	14	6-1	211
+210	Michael Taaffe	Texas	Sr	S	15	6-0	189
+211	Aamil Wagner	Notre Dame	Jr	OT	20	6-6	306
+212	Nicholas Singleton	Penn State	Sr	RB	12	6-0	224
+213	Trey Moore	Texas	Sr	LB	20	6-4	243
+214	Tim Keenan III	Alabama	Sr	DL	25	6-1	327
+215	Collin Wright	Stanford	Sr	CB	23	6-0	188
+216	Will Pauling	Notre Dame	Sr	WR	33	5-10	190
+217	Josh Cameron	Baylor	Sr	WR	34	6-2	220
+218	Bryson Eason	Tennessee	Sr	DL	26	6-3	315
+219	Caden Barnett	Wyoming	Sr	IOL	27	6-5	320
+220	Justin Jefferson	Alabama	Sr	LB	21	6-0	223
+221	Wesley Bailey	Louisville	Sr	EDGE	19	6-5	265
+222	James Thompson Jr.	Illinois	Sr	DL	27	6-6	310
+223	Wade Woodaz	Clemson	Sr	LB	22	6-3	236
+224	Logan Fano	Utah	Jr	EDGE	20	6-5	257
+225	Brandon Cleveland	NC State	Sr	DL	28	6-3	307
+226	Bryce Boettcher	Oregon	Sr	LB	23	6-2	232
+227	Cade Klubnik	Clemson	Sr	QB	8	6-2	210
+228	Cian Slone	NC State	Sr	LB	24	6-4	252
+229	Anez Cooper	Miami (Fla.)	Sr	IOL	28	6-6	334
+230	Jalen Huskey	Maryland	Sr	S	16	6-1	196
+231	Riley Mahlman	Wisconsin	Sr	OT	21	6-8	318
+232	Brent Austin	California	Sr	CB	24	5-11	180
+233	Tanner Koziol	Houston	Sr	TE	18	6-7	247
+234	Enrique Cruz Jr.	Kansas	Sr	OT	22	6-6	313
+235	Rene Konga	Louisville	Sr	DL	29	6-4	300
+236	Louis Moore	Indiana	Sr	S	17	5-11	200
+237	Max Llewellyn	Iowa	Sr	EDGE	21	6-5	263
+238	Kahlil Benson	Indiana	Sr	OT	23	6-6	319
+239	Matthew Hibner	SMU	Sr	TE	19	6-4	251
+240	Diego Pounds	Ole Miss	Sr	OT	24	6-6	325
+241	Barion Brown	LSU	Sr	WR	35	5-11	185
+242	Jacob Rizy	Florida State	Sr	IOL	29	6-5	310
+243	Malik Benson	Oregon	Sr	WR	36	6-0	189
+244	J. Michael Sturdivant	Florida	Sr	WR	37	6-3	207
+245	Fa'alili Fa'amoe	Wake Forest	Sr	OT	25	6-5	311
+246	Chris Adams	Memphis	Sr	IOL	30	6-5	311
+247	Max Tomczak	Youngstown St.	Sr	WR	38	6-0	195
+248	Devon Marshall	NC State	Sr	CB	25	5-11	200
+249	Ethan Burke	Texas	Sr	EDGE	22	6-6	259
+250	Ahmari Harvey	Georgia Tech	Sr	CB	26	5-11	185
+251	TJ Hall	Iowa	Sr	CB	27	6-0	190
+252	Lorenzo Styles Jr.	Ohio State	Sr	CB	28	6-1	194
+253	Latrell McCutchin Sr.	Houston	Sr	CB	29	6-2	191
+254	Jam Miller	Alabama	Sr	RB	13	5-10	209
+255	Domani Jackson	Alabama	Sr	CB	30	6-1	196
+256	Thaddeus Dixon	North Carolina	Sr	CB	31	6-1	195
+257	Josh Thompson	LSU	Sr	IOL	31	6-5	315
+258	Jack Kelly	BYU	Sr	LB	25	6-2	240
+259	Le'Veon Moss	Texas A&M	Sr	RB	14	5-11	210
+260	Quintayvious Hutchins	Boston College	Sr	EDGE	23	6-3	233
+261	James Brockermeyer	Miami (Fla.)	Sr	IOL	32	6-3	295
+262	Romello Brinson	SMU	Sr	WR	39	6-2	190
+263	Micah Morris	Georgia	Sr	IOL	33	6-4	330
+264	Xavian Sorey Jr.	Arkansas	Sr	LB	26	6-2	228
+265	DJ Campbell	Texas	Sr	IOL	34	6-3	313
+266	Scooby Williams	Texas A&M	Sr	LB	27	6-2	231
+267	Roman Hemby	Indiana	Sr	RB	15	6-0	207
+268	Aiden Fisher	Indiana	Sr	LB	28	6-1	231
+269	Sawyer Robertson	Baylor	Sr	QB	9	6-4	216
+270	Jaeden Roberts	Alabama	Sr	IOL	35	6-5	333
+271	Harrison Wallace III	Ole Miss	Sr	WR	40	6-0	192
+272	Jalen McMurray	Tennessee	Sr	CB	32	6-0	187
+273	Garrett DiGiorgio	UCLA	Sr	IOL	36	6-7	319
+274	CJ Daniels	Miami (Fla.)	Sr	WR	41	6-2	202
+275	Cameron Ball	Arkansas	Sr	DL	30	6-4	310
+276	Deven Eastern	Minnesota	Sr	DL	31	6-5	315
+277	Damonic Williams	Oklahoma	Sr	DL	32	6-2	305
+278	Namdi Obiazor	TCU	Sr	LB	29	6-3	229
+279	Lake McRee	USC	Sr	TE	20	6-4	243
+280	George Gumbs Jr.	Florida	Sr	EDGE	24	6-4	245
+281	DJ Rogers	TCU	Sr	TE	21	6-4	258
+282	Chase Roberts	BYU	Sr	WR	42	6-3	209
+283	Charles Demmings	S.F. Austin	Sr	CB	33	6-1	193
+284	DeShon Singleton	Nebraska	Sr	S	18	6-3	205
+285	Jayden Williams	Ole Miss	Sr	IOL	37	6-4	320
+286	Ahmaad Moses	SMU	Sr	S	19	5-9	196
+287	Jeffrey M'ba	SMU	Sr	DL	33	6-6	312
+288	Riley Nowakowski	Indiana	Sr	TE	22	6-2	250
+289	Jaylon Guilbeau	Texas	Sr	CB	34	5-11	190
+290	Gary Smith III	UCLA	Sr	DL	34	6-1	319
+291	Toriano Pride Jr.	Missouri	Sr	CB	35	5-10	185
+292	Dalton Johnson	Arizona	Sr	S	20	5-11	192
+293	Kendal Daniels	Oklahoma	Sr	LB	30	6-5	242
+294	Micah Pettus	Florida State	Sr	OT	26	6-7	349
+295	Jackie Marshall	Baylor	Sr	DL	35	6-3	293
+296	Kaelon Black	Indiana	Sr	RB	16	5-10	211
+297	Patrick Payton	LSU	Sr	EDGE	25	6-5	260
+298	Dane Key	Nebraska	Sr	WR	43	6-3	210
+299	Caullin Lacy	Louisville	Sr	WR	44	5-9	183
+300	Michael Heldman	C. Michigan	Sr	EDGE	26	6-4	260
+301	Emmanuel Henderson Jr.	Kansas	Sr	WR	45	6-1	185
+302	Ike Larsen	Utah St.	Sr	S	21	5-11	195
+303	Aaron Graves	Iowa	Sr	DL	36	6-5	295
+304	Khalil Jacobs	Missouri	Sr	LB	31	6-1	228
+305	Nyjalik Kelly	UCF	Sr	LB	32	6-5	256
+306	Josh Moten	So. Miss	Sr	CB	36	6-0	185
+307	Rasheed Miller	Louisville	Sr	OT	27	6-7	310
+308	Josh Gesky	Illinois	Sr	IOL	38	6-5	335
+309	Gary Bryant Jr.	Oregon	Sr	WR	46	5-11	191
+310	Jarod Washington	SC State	Sr	CB	37	6-2	188
+311	Aaron Hall	Duke	Sr	DL	37	6-4	290
+312	Caleb Douglas	Texas Tech	Sr	WR	47	6-4	206
+313	Xavier Nwankpa	Iowa	Sr	S	22	6-3	208
+314	Joey Aguilar	Tennessee	Sr	QB	10	6-3	225
+315	Kaden Wetjen	Iowa	Sr	WR	48	5-9	193
+316	Nolan Rucci	Penn State	Sr	OT	28	6-8	305
+317	Haynes King	Georgia Tech	Sr	QB	11	6-2	212
+318	Mikail Kamara	Indiana	Sr	DL	38	6-1	262
+319	Luke Altmyer	Illinois	Sr	QB	12	6-2	210
+320	Mark Gronowski	Iowa	Sr	QB	13	6-2	235
+321	Ethan Onianwa	Ohio State	Sr	IOL	39	6-7	331
+322	John Michael Gyllenborg	Wyoming	Sr	TE	23	6-6	249
+323	Landon Robinson	Navy	Sr	DL	39	6-0	287
+324	Avery Smith	Toledo	Sr	CB	38	5-11	196
+325	Noah Thomas	Georgia	Sr	WR	49	6-5	205
+326	Owen Heinecke	Oklahoma	Jr	LB	33	6-2	227
+327	Chip Trayanum	Toledo	Sr	RB	17	5-11	227
+328	Evan Beerntsen	Northwestern	Sr	IOL	40	6-4	301
+329	Dillon Wade	Auburn	Sr	IOL	41	6-3	316
+330	Alan Herron	Maryland	Sr	OT	29	6-5	308
+331	Lander Barton	Utah	Sr	LB	34	6-5	233
+332	Eric Gentry	USC	Sr	LB	35	6-7	221
+333	Ricardo Hallman	Wisconsin	Sr	CB	39	5-10	190
+334	RJ Maryland	SMU	Sr	TE	24	6-4	236
+335	Joshua Braun	Kentucky	Sr	IOL	42	6-6	325
+336	Desmond Reid	Pittsburgh	Sr	RB	18	5-6	174
+337	Jaydn Ott	Oklahoma	Sr	RB	19	5-11	208
+338	Tristan Leigh	Clemson	Sr	OT	30	6-6	310
+339	Bobby Jamison-Travis	Auburn	Sr	DL	40	6-3	328
+340	Skyler Thomas	Oregon State	Sr	S	23	6-2	212
+341	Athan Kaliakmanis	Rutgers	Sr	QB	14	6-3	212
+342	Wesley Bissainthe	Miami (Fla.)	Sr	LB	36	6-2	225
+343	Marcus Allen	North Carolina	Sr	CB	40	6-2	187
+344	J'Mari Taylor	Virginia	Sr	RB	20	5-10	199
+345	Karson Sharar	Iowa	Sr	LB	37	6-2	231
+346	Lewis Bond	Boston College	Sr	WR	50	5-11	190
+347	Jordan Hudson	SMU	Sr	WR	51	6-1	191
+348	Devin Voisin	South Alabama	Sr	WR	52	5-10	187
+349	Jalen Stroman	Notre Dame	Sr	S	24	6-1	201
+350	Rahsul Faison	South Carolina	Sr	RB	21	6-0	218
+351	Dillon Bell	Georgia	Sr	WR	53	6-1	209
+352	Jack Pyburn	LSU	Sr	EDGE	27	6-4	258
+353	Jalen Walthall	Incarnate Word	Sr	WR	54	6-1	191
+354	Seydou Traore	Miss. State	Sr	TE	25	6-4	235
+355	Ceyair Wright	Nebraska	Sr	CB	41	6-0	190
+356	Wesley Williams	Duke	Jr	EDGE	28	6-4	256
+357	Jaren Kanak	Oklahoma	Sr	TE	26	6-2	234
+358	Aidan Hubbard	Northwestern	Sr	EDGE	29	6-5	260
+359	Noah Whittington	Oregon	Sr	RB	22	5-8	205
+360	Delby Lemieux	Dartmouth	Sr	IOL	43	6-4	295
+361	CJ Donaldson	Ohio State	Sr	RB	23	6-2	230
+362	Wydett Williams Jr.	Ole Miss	Sr	S	25	6-2	210
+363	Joe Fagnano	UConn	Sr	QB	15	6-3	226
+364	Miles Kitselman	Tennessee	Sr	TE	27	6-5	251
+365	Behren Morton	Texas Tech	Sr	QB	16	6-2	210
+366	Jaden Dugger	Louisiana	Sr	LB	38	6-5	250
+367	Fred Davis II	Northwestern	Sr	CB	42	6-1	200
+368	Bauer Sharp	LSU	Sr	TE	28	6-5	249
+369	Kejon Owens	FIU	Sr	RB	24	5-11	210
+370	Max Bredeson	Michigan	Sr	TE	29	6-2	252
+371	Marvin Jones Jr.	Oklahoma	Sr	EDGE	30	6-5	245
+372	Reuben Fatheree II	Texas A&M	Sr	OT	31	6-7	333
+373	Donaven McCulley	Michigan	Sr	WR	55	6-5	203
+374	Jalon Daniels	Kansas	Sr	QB	17	6-1	219
+375	Cole Wisniewski	Texas Tech	Sr	S	26	6-4	220
+376	Khalil Dinkins	Penn State	Sr	TE	30	6-4	251
+377	Diego Pavia	Vanderbilt	Sr	QB	18	5-10	207
+378	David Blay Jr.	Miami (Fla.)	Sr	DL	41	6-4	305
+379	Drew Stevens	Iowa	Sr	K	1	6-1	213
+380	Sam Howard	Tulane	Sr	LB	39	6-2	220
+381	Tyre West	Tennessee	Sr	DL	42	6-3	290
+382	Miles Capers	Vanderbilt	Sr	EDGE	31	6-4	249
+383	Myles Rowser	Arizona St.	Sr	S	27	6-1	195
+384	Austin Brown	Wisconsin	Sr	S	28	6-1	215
+385	Ernest Hausmann	Michigan	Sr	LB	40	6-2	235
+386	Keeshawn Silver	USC	Sr	DL	43	6-4	330
+387	Tomas Rimac	Virginia Tech	Sr	IOL	44	6-6	317
+388	Terion Stewart	Virginia Tech	Sr	RB	25	5-9	222
+389	Nick DeGennaro	James Madison	Sr	WR	56	6-1	196
+390	Miles Scott	Illinois	Sr	S	29	5-11	210
+391	Isaiah Nwokobia	SMU	Sr	S	30	6-1	205
+392	Bryce Foster	Kansas	Sr	IOL	45	6-5	310
+393	Dean Connors	Houston	Sr	RB	26	6-0	206
+394	Zach Durfee	Washington	Sr	EDGE	32	6-5	258
+395	Shiyazh Pete	Kentucky	Sr	OT	32	6-8	322
+396	Keyshawn James-Newby	New Mexico	Sr	EDGE	33	6-2	244
+397	Christian Jones	San Diego St.	Sr	OT	33	6-9	335
+398	Dan Villari	Syracuse	Sr	TE	31	6-4	245
+399	Al'zillion Hamilton	Fresno St.	Sr	CB	43	5-11	185
+400	Caden Fordham	NC State	Sr	LB	41	6-1	230
+401	DQ Smith	South Carolina	Sr	S	31	6-1	219
+402	Kobe Baynes	Kansas	Sr	IOL	46	6-4	315
+403	James Neal III	Iowa St.	Sr	OT	34	6-6	325
+404	Ja'Mori Maclin	Kentucky	Sr	WR	57	5-11	191
+405	Vincent Anthony Jr.	Duke	Sr	EDGE	34	6-6	258
+406	Shad Banks Jr.	UTSA	Sr	LB	42	6-1	230
+407	Maximus Pulley	Wofford	Sr	S	32	5-11	200
+408	Cortez Braham Jr.	Memphis	Sr	WR	58	6-2	201
+409	Kentrel Bullock	South Alabama	Sr	RB	27	5-10	205
+410	Rod Moore	Michigan	Sr	S	33	6-0	198
+411	Jaylan Knighton	West Virginia	Sr	RB	28	5-10	185
+412	Tyreek Chappell	Texas A&M	Sr	CB	44	5-11	180
+413	Jake Pope	Illinois St.	Sr	OT	35	6-7	300
+414	Tony Grimes	Purdue	Sr	CB	45	6-2	195
+415	Hank Beatty	Illinois	Sr	WR	59	5-11	185
+416	Davon Booth	Miss. State	Sr	RB	29	5-10	205
+417	Cam Miller	Rutgers	Sr	CB	46	6-0	192
+418	Kolbey Taylor	Vanderbilt	Sr	CB	47	6-3	190
+419	Bryan Thomas Jr.	South Carolina	Sr	EDGE	35	6-2	249
+420	Carsen Ryan	BYU	Sr	TE	32	6-4	250
+421	Keelan Marion	Miami (Fla.)	Sr	WR	60	6-0	195
+422	Tyas Martin	Marshall	Sr	DL	44	6-4	316
+423	Jack Velling	Michigan St.	Sr	TE	33	6-5	245
+424	Terry Webb	SMU	Sr	DL	45	6-3	313
+425	Trent Hendrick	James Madison	Sr	LB	43	6-0	234
+426	Malik Spencer	Michigan St.	Sr	S	34	6-1	191
+427	Rushawn Lawrence	Minnesota	Sr	DL	46	6-2	270
+428	Jacob Thomas	James Madison	Sr	S	35	6-1	212
+429	Connor Tollison	Missouri	Sr	IOL	47	6-4	290
+430	Jalen Catalon	Missouri	Sr	S	36	5-10	200
+431	Isheem Young	Memphis	Sr	S	37	5-10	220
+432	Tyler Van Dyke	SMU	Sr	QB	19	6-4	230
+433	Zion Nelson	SMU	Sr	OT	36	6-5	318
+434	Alex Afari Jr.	Kentucky	Sr	LB	44	6-2	227
+435	Javon Gipson	Abil Christian	Sr	WR	61	6-4	215
+436	Derek Simmons	Oklahoma	Sr	OT	37	6-5	317
+437	Rocco Spindler	Nebraska	Sr	OL	1	6-5	320
+438	James Faminu	UNLV	Sr	OT	38	6-6	315
+439	Jhalyn Shuler	South Florida	Sr	LB	45	6-3	230
+440	Michael Wortham	Montana	Sr	WR	62	5-9	190
+441	Anthony Smith	East Carolina	Sr	WR	63	6-3	189
+442	DJ Graham II	Kansas	Sr	CB	48	6-0	200
+443	Courtland Ford	UCLA	Sr	OT	39	6-6	315
+444	Pete Nygra	Louisville	Sr	IOL	48	6-4	300
+445	Brylan Green	Liberty	Sr	S	38	5-9	180
+446	Christian Martin	Colorado St.	Soph	OT	40	6-6	300
+447	Jack Dingle	Cincinnati	Sr	LB	46	6-4	240
+448	Amari Niblack	Texas A&M	Sr	TE	34	6-3	235
+449	Armani Winfield	Colorado St.	Jr	WR	64	6-2	200
+450	Bangally Kamara	Kansas	Sr	LB	47	6-2	235
+451	Bernard Gooden	LSU	Sr	DL	47	6-1	268
+452	Dayon Hayes	Texas A&M	Sr	EDGE	36	6-3	264
+453	EJ Smith	Texas A&M	Sr	RB	30	5-11	211
+454	Chris Hilton Jr.	LSU	Sr	WR	65	6-0	188
+455	Daniel Sobkowicz	Illinois St.	Sr	WR	66	6-3	205
+456	Declan Williams	Incarnate Word	Sr	LB	48	6-2	245
+457	Giovanni El-Hadi	Michigan	Sr	IOL	49	6-5	315
+458	Ismail Mahdi	Arizona	Sr	RB	31	5-9	184
+459	Joe Cooper	Slippery Rock	-	OT	41	6-7	320
+460	Jyrin Johnson	Bowling Green	Sr	TE	35	6-4	235
+461	Kris Hutson	Arizona	Sr	WR	67	5-11	173
+462	Kyron Drones	Virginia Tech	Sr	QB	20	6-2	235
+463	Maverick McIvor	W. Kentucky	Sr	QB	21	6-2	214
+464	Miller Moss	Louisville	Sr	QB	22	6-2	210
+465	Rayshon Luke	Fresno St.	Jr	RB	32	5-9	180
+466	West Weeks	LSU	Sr	LB	49	6-2	235
+467	Blake Shapen	Miss. State	Sr	QB	23	6-1	210
+468	Dekel Crowdus	Wisconsin	Sr	WR	68	5-11	180
+469	Matthew Henry	W. Kentucky	Sr	WR	69	6-0	183
+470	Preston Stone	Northwestern	Sr	QB	24	6-1	215
+471	Uar Bernard	Nigeria	-	DL	48	6-4	306
+472	Joshua Weru	Kenya	-	EDGE	37	6-4	227
