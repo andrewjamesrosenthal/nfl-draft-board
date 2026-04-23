@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
-import { refreshFromEspn } from "@/app/api/draft/order/route";
+import { refreshFromEspn } from "@/lib/espn/draft-order";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";

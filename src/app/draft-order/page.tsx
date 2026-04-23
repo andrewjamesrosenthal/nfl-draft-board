@@ -3,7 +3,7 @@ import db from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PlayerHeadshot } from "@/components/player-headshot";
-import { refreshFromEspn } from "@/app/api/draft/order/route";
+import { refreshFromEspn } from "@/lib/espn/draft-order";
 import { Radio, Clock, CloudDownload } from "lucide-react";
 
 export const dynamic = "force-dynamic";
