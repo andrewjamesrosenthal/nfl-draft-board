@@ -7,9 +7,14 @@ export async function refreshFromEspn(year: number): Promise<number> {
   const now = new Date();
   for (const p of flat) {
     let playerId: number | undefined;
+
+    // Only link players who are actually in this draft class.
+    // Without the draftYear filter, ESPN athlete IDs for historical players
+    // (e.g. DeVonta Smith 2021) can match picks in the wrong year when ESPN
+    // pre-populates its draft order with projected selections.
     if (p.espnAthleteId) {
       const linked = await db.player.findFirst({
-        where: { espnId: p.espnAthleteId },
+        where: { espnId: p.espnAthleteId, draftYear: year },
         select: { id: true },
       });
       if (linked) playerId = linked.id;
@@ -21,6 +26,7 @@ export async function refreshFromEspn(year: number): Promise<number> {
       });
       if (byPick) playerId = byPick.id;
     }
+
     await db.draftOrderPick.upsert({
       where: { draftYear_overallPick: { draftYear: year, overallPick: p.overallPick } },
       update: {
@@ -34,7 +40,7 @@ export async function refreshFromEspn(year: number): Promise<number> {
         espnAthleteId: p.espnAthleteId,
         selectedAthlete: p.selectedAthlete,
         tradedFromAbbr: p.tradedFromAbbr,
-        playerId,
+        playerId: playerId ?? null,
         fetchedAt: now,
       },
       create: {
@@ -50,7 +56,7 @@ export async function refreshFromEspn(year: number): Promise<number> {
         espnAthleteId: p.espnAthleteId,
         selectedAthlete: p.selectedAthlete,
         tradedFromAbbr: p.tradedFromAbbr,
-        playerId,
+        playerId: playerId ?? null,
         fetchedAt: now,
       },
     });
