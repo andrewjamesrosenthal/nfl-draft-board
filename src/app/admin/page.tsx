@@ -5,7 +5,7 @@ import Link from "next/link";
 import { POSITION_COLOR } from "@/lib/positions";
 import { isAdminAuthorized } from "@/lib/admin";
 import { AdminLogin } from "./admin-login";
-import { Users, Swords, BarChart2, TrendingUp, Clock } from "lucide-react";
+import { Users, Swords, BarChart2, TrendingUp, Clock, UserCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -41,6 +41,8 @@ export default async function AdminPage() {
 
     // Per-user vote distribution buckets
     buckets,
+
+    userList,
   ] = await Promise.all([
     db.user.count(),
     db.user.count({ where: { isAnonymous: false } }),
@@ -59,6 +61,22 @@ export default async function AdminPage() {
       by: ["userId"],
       where: { skipped: false },
       _count: { _all: true },
+    }),
+
+    // User tracker — all users with their activity
+    db.user.findMany({
+      orderBy: { lastSeen: "desc" },
+      take: 100,
+      select: {
+        id: true,
+        handle: true,
+        displayName: true,
+        email: true,
+        isAnonymous: true,
+        createdAt: true,
+        lastSeen: true,
+        _count: { select: { matchups: true, rankings: true, watchlist: true } },
+      },
     }),
   ]);
 
@@ -83,6 +101,17 @@ export default async function AdminPage() {
     { label: "500+",   count: voteCounts.filter((v) => v >= 500).length },
   ];
   const maxBracket = Math.max(...brackets.map((b) => b.count), 1);
+
+  // Build a vote-count lookup for the user tracker
+  const votesByUser = new Map(buckets.map((b) => [b.userId, b._count._all]));
+
+  function timeAgo(date: Date): string {
+    const secs = Math.floor((now.getTime() - date.getTime()) / 1000);
+    if (secs < 60)   return `${secs}s ago`;
+    if (secs < 3600) return `${Math.floor(secs / 60)}m ago`;
+    if (secs < 86400) return `${Math.floor(secs / 3600)}h ago`;
+    return `${Math.floor(secs / 86400)}d ago`;
+  }
 
   return (
     <div className="flex flex-col gap-6 max-w-5xl">
@@ -193,6 +222,88 @@ export default async function AdminPage() {
               </div>
             ))}
           </CardContent>
+        </Card>
+      </section>
+
+      {/* ── User tracker ───────────────────────────────────────────────── */}
+      <section className="flex flex-col gap-3">
+        <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          <UserCheck className="h-4 w-4" /> User tracker
+          <span className="ml-1 font-normal normal-case text-xs">
+            (top 100 by last seen)
+          </span>
+        </h2>
+        <Card>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border/60 text-xs uppercase tracking-wide text-muted-foreground">
+                  <th className="px-4 py-2.5 text-left font-medium">User</th>
+                  <th className="px-4 py-2.5 text-right font-medium">Votes</th>
+                  <th className="px-4 py-2.5 text-right font-medium">Rankings</th>
+                  <th className="px-4 py-2.5 text-right font-medium">Watchlist</th>
+                  <th className="px-4 py-2.5 text-right font-medium">Joined</th>
+                  <th className="px-4 py-2.5 text-right font-medium">Last seen</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/40">
+                {userList.map((u) => {
+                  const votes = votesByUser.get(u.id) ?? 0;
+                  const name = u.displayName ?? u.handle ?? null;
+                  return (
+                    <tr key={u.id} className="hover:bg-muted/20 transition-colors">
+                      <td className="px-4 py-2.5">
+                        <div className="flex items-center gap-2">
+                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand/40 to-brand-2/40 text-[10px] font-bold">
+                            {name ? name.slice(0, 2).toUpperCase() : "?"}
+                          </div>
+                          <div className="min-w-0">
+                            {u.handle ? (
+                              <Link
+                                href={`/u/${u.handle}`}
+                                className="font-medium hover:text-brand truncate block"
+                              >
+                                {name ?? u.handle}
+                              </Link>
+                            ) : (
+                              <span className="text-muted-foreground truncate block">
+                                {name ?? "Anonymous"}
+                              </span>
+                            )}
+                            {u.handle && (
+                              <span className="text-xs text-muted-foreground">@{u.handle}</span>
+                            )}
+                            {u.email && (
+                              <span className="text-xs text-muted-foreground block truncate max-w-[180px]">
+                                {u.email}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-2.5 text-right font-mono">
+                        <span className={votes >= 50 ? "text-brand font-semibold" : votes === 0 ? "text-muted-foreground" : ""}>
+                          {votes}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2.5 text-right font-mono text-muted-foreground">
+                        {u._count.rankings}
+                      </td>
+                      <td className="px-4 py-2.5 text-right font-mono text-muted-foreground">
+                        {u._count.watchlist}
+                      </td>
+                      <td className="px-4 py-2.5 text-right text-xs text-muted-foreground whitespace-nowrap">
+                        {new Date(u.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-2.5 text-right text-xs text-muted-foreground whitespace-nowrap">
+                        {timeAgo(new Date(u.lastSeen))}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </Card>
       </section>
 
