@@ -5,13 +5,12 @@ import { PICK_GRADE_UNLOCK } from "@/lib/pick-grade";
 
 export const dynamic = "force-dynamic";
 
-// Candidate pick shape returned to the client.
+// Shape returned to the client for each pick card.
 export type GradePick = {
-  id: number;
-  slug: string;
+  id: number;           // = overallPick — stable voting key
+  playerId: number | null;
+  slug: string | null;
   fullName: string;
-  firstName: string;
-  lastName: string;
   position: string;
   school: string;
   espnId: string | null;
@@ -31,34 +30,55 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const year = Number(url.searchParams.get("year") ?? 2026);
 
-  // Locked until the date threshold has passed.
   if (new Date() < PICK_GRADE_UNLOCK) {
     return NextResponse.json({ locked: true, matchup: null });
   }
 
-  // All drafted picks for this year (players with actualPick set).
-  const picks = await db.player.findMany({
-    where: { draftYear: year, actualPick: { not: null } },
-    orderBy: { actualPick: "asc" },
-    select: {
-      id: true, slug: true, fullName: true, firstName: true, lastName: true,
-      position: true, school: true, espnId: true, espnIdSource: true,
-      actualPick: true, actualRound: true, actualTeamAbbr: true,
-    },
+  // Use DraftOrderPick as the source of truth for actual picks —
+  // it always reflects ESPN's live data regardless of whether we've
+  // linked the pick to a Player record yet.
+  const draftPicks = await db.draftOrderPick.findMany({
+    where: { draftYear: year, isCompleted: true },
+    orderBy: { overallPick: "asc" },
   });
 
-  if (picks.length < 2) {
+  if (draftPicks.length < 2) {
     return NextResponse.json({ locked: false, matchup: null, reason: "not_enough_picks" });
   }
 
-  // Fetch user's existing grades for these picks.
-  const playerIds = picks.map((p) => p.id);
-  const grades = await db.pickGrade.findMany({
-    where: { userId, playerId: { in: playerIds } },
-  });
-  const gradeMap = new Map(grades.map((g) => [g.playerId, g]));
+  // Fetch linked player details for picks that have a player linked.
+  const linkedPlayerIds = draftPicks
+    .map((p) => p.playerId)
+    .filter((id): id is number => id != null);
+  const linkedPlayers = linkedPlayerIds.length
+    ? await db.player.findMany({
+        where: { id: { in: linkedPlayerIds } },
+        select: {
+          id: true, slug: true, position: true, school: true,
+          espnId: true, espnIdSource: true,
+        },
+      })
+    : [];
+  const playerById = new Map(linkedPlayers.map((p) => [p.id, p]));
 
-  // Recent matchup pairs to avoid repeating.
+  // Teams for colors.
+  const teamAbbrs = [...new Set(draftPicks.map((p) => p.teamAbbr))];
+  const teams = await db.team.findMany({ where: { abbr: { in: teamAbbrs } } });
+  const teamMap = new Map(teams.map((t) => [t.abbr, t]));
+
+  // Grade ratings keyed by pick's overall pick number (stable across refreshes).
+  const grades = await db.pickGrade.findMany({
+    where: { userId, draftYear: year },
+  });
+  const gradeByPickId = new Map(grades.map((g) => [String(g.playerId ?? g.id), g]));
+
+  // Helper: grade lookup using playerId if linked, else overallPick as fallback key.
+  const getGrade = (pick: (typeof draftPicks)[0]) => {
+    const key = pick.playerId ? String(pick.playerId) : `pick:${pick.overallPick}`;
+    return gradeByPickId.get(key) ?? { rating: 1500, comparisons: 0 };
+  };
+
+  // Recent matchups to avoid repeats.
   const recent = await db.pickGradeMatchup.findMany({
     where: { userId, draftYear: year },
     orderBy: { createdAt: "desc" },
@@ -67,66 +87,26 @@ export async function GET(req: Request) {
   });
   const recentPairs = new Set(recent.map((m) => pairKey(m.leftId, m.rightId)));
 
-  // Teams for name/colors.
-  const teamAbbrs = [...new Set(picks.map((p) => p.actualTeamAbbr).filter(Boolean))] as string[];
-  const teams = await db.team.findMany({ where: { abbr: { in: teamAbbrs } } });
-  const teamMap = new Map(teams.map((t) => [t.abbr, t]));
-
-  // Helper: get or create a PickGrade row with initial rating 1500.
-  const getGrade = (id: number) =>
-    gradeMap.get(id) ?? { rating: 1500, comparisons: 0 };
-
-  // Selection: pick the candidate with highest uncertainty (fewest comparisons),
-  // then find an opponent close to them in pick number or Elo rating.
-  const sorted = [...picks].sort((a, b) => {
-    const ca = getGrade(a.id).comparisons;
-    const cb = getGrade(b.id).comparisons;
-    return ca - cb; // fewest comparisons first
-  });
-
-  let left = sorted[0];
-  let right: (typeof picks)[0] | null = null;
-
-  // Find the best opponent: not the same pick, not recently seen together,
-  // score by distance in actualPick (close picks = informative comparison).
-  const PICK_WINDOW = 30; // prefer picks within ±30 slots
-  const candidates = picks
-    .filter((p) => p.id !== left.id)
-    .map((p) => {
-      const dist = Math.abs((p.actualPick ?? 999) - (left.actualPick ?? 999));
-      const recently = recentPairs.has(pairKey(left.id, p.id));
-      return { pick: p, score: dist + (recently ? 1000 : 0) };
-    })
-    .sort((a, b) => a.score - b.score);
-
-  right = candidates[0]?.pick ?? null;
-
-  // If no valid opponent within window, just grab closest pick.
-  if (!right || Math.abs((right.actualPick ?? 999) - (left.actualPick ?? 999)) > PICK_WINDOW + 1000) {
-    right = candidates.find((c) => c.score < 1000)?.pick ?? candidates[0]?.pick ?? null;
-  }
-
-  if (!right) {
-    return NextResponse.json({ locked: false, matchup: null, reason: "no_opponent" });
-  }
-
-  const toGradePick = (p: (typeof picks)[0]): GradePick => {
-    const team = p.actualTeamAbbr ? teamMap.get(p.actualTeamAbbr) : null;
-    const g = getGrade(p.id);
+  const toGradePick = (dp: (typeof draftPicks)[0]): GradePick => {
+    const player = dp.playerId ? playerById.get(dp.playerId) : null;
+    const team = teamMap.get(dp.teamAbbr);
+    const g = getGrade(dp);
+    // Prefer linked player's ESPN ID; fall back to ESPN athlete ID on the pick itself.
+    const espnId = player?.espnId ?? dp.espnAthleteId ?? null;
+    const espnIdSource = player?.espnIdSource ?? (espnId ? "college-football" : null);
     return {
-      id: p.id,
-      slug: p.slug,
-      fullName: p.fullName,
-      firstName: p.firstName,
-      lastName: p.lastName,
-      position: p.position,
-      school: p.school,
-      espnId: p.espnId,
-      espnIdSource: p.espnIdSource,
-      actualPick: p.actualPick!,
-      actualRound: p.actualRound!,
-      actualTeamAbbr: p.actualTeamAbbr!,
-      teamName: team ? `${team.city} ${team.name}` : p.actualTeamAbbr,
+      id: dp.overallPick,
+      playerId: dp.playerId,
+      slug: player?.slug ?? null,
+      fullName: dp.selectedAthlete ?? player?.slug ?? `Pick ${dp.overallPick}`,
+      position: player?.position ?? "—",
+      school: player?.school ?? "—",
+      espnId,
+      espnIdSource,
+      actualPick: dp.overallPick,
+      actualRound: dp.round,
+      actualTeamAbbr: dp.teamAbbr,
+      teamName: team ? `${team.city} ${team.name}` : dp.teamName ?? dp.teamAbbr,
       teamPrimaryHex: team?.primaryHex ?? null,
       teamSecondaryHex: team?.secondaryHex ?? null,
       myRating: g.rating,
@@ -134,7 +114,21 @@ export async function GET(req: Request) {
     };
   };
 
-  // Stats for UI counters.
+  // Select anchor (highest uncertainty) + nearby opponent.
+  const sorted = [...draftPicks].sort((a, b) => getGrade(a).comparisons - getGrade(b).comparisons);
+  const anchor = sorted[0];
+  const candidates = draftPicks
+    .filter((p) => p.overallPick !== anchor.overallPick)
+    .map((p) => ({
+      pick: p,
+      score: Math.abs(p.overallPick - anchor.overallPick) +
+             (recentPairs.has(pairKey(anchor.overallPick, p.overallPick)) ? 1000 : 0),
+    }))
+    .sort((a, b) => a.score - b.score);
+
+  const opponent = candidates.find((c) => c.score < 1000)?.pick ?? candidates[0]?.pick;
+  if (!opponent) return NextResponse.json({ locked: false, matchup: null });
+
   const [gradeVotes, gradeSkips] = await Promise.all([
     db.pickGradeMatchup.count({ where: { userId, draftYear: year, skipped: false } }),
     db.pickGradeMatchup.count({ where: { userId, draftYear: year, skipped: true } }),
@@ -142,8 +136,8 @@ export async function GET(req: Request) {
 
   return NextResponse.json({
     locked: false,
-    matchup: { left: toGradePick(left), right: toGradePick(right) },
-    stats: { votes: gradeVotes, skips: gradeSkips, totalPicks: picks.length },
+    matchup: { left: toGradePick(anchor), right: toGradePick(opponent) },
+    stats: { votes: gradeVotes, skips: gradeSkips, totalPicks: draftPicks.length },
   });
 }
 

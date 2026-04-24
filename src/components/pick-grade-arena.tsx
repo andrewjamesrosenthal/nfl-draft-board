@@ -80,7 +80,7 @@ function PickCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-4xl font-black opacity-30" style={{ color: fg }}>
-            {pick.firstName[0]}{pick.lastName[0]}
+            {pick.fullName.slice(0, 2).toUpperCase()}
           </div>
         )}
       </div>

@@ -29,17 +29,9 @@ export async function refreshFromEspn(year: number): Promise<number> {
       if (linked) playerId = linked.id;
     }
 
-    // If ESPN ID didn't match, try matching by player name slug.
-    if (!playerId && p.selectedAthlete) {
-      const slug = slugify(p.selectedAthlete);
-      const byName = await db.player.findFirst({
-        where: { slug, draftYear: year },
-        select: { id: true },
-      });
-      if (byName) playerId = byName.id;
-    }
-
-    // Fall back to matching an existing player by pick number (for historical classes).
+    // For historical classes only: fall back to matching by pick number.
+    // We do NOT do name-slug matching — too many false positives (e.g. a 2026
+    // prospect named "DeVonta Smith" matching the Eagles WR from 2021).
     if (!playerId) {
       const byPick = await db.player.findFirst({
         where: { draftYear: year, actualPick: p.overallPick },
