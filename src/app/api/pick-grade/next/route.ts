@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 import { getOrCreateUser } from "@/lib/user-session";
-import { pickGraderUnlocked } from "@/lib/pick-grade";
+import { PICK_GRADE_UNLOCK } from "@/lib/pick-grade";
 
 export const dynamic = "force-dynamic";
 
@@ -27,13 +27,14 @@ export type GradePick = {
 };
 
 export async function GET(req: Request) {
-  if (!pickGraderUnlocked()) {
-    return NextResponse.json({ locked: true, matchup: null });
-  }
-
   const { id: userId } = await getOrCreateUser();
   const url = new URL(req.url);
   const year = Number(url.searchParams.get("year") ?? 2026);
+
+  // Locked until the date threshold has passed.
+  if (new Date() < PICK_GRADE_UNLOCK) {
+    return NextResponse.json({ locked: true, matchup: null });
+  }
 
   // All drafted picks for this year (players with actualPick set).
   const picks = await db.player.findMany({

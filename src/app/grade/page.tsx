@@ -2,13 +2,21 @@ import { Lock, GraduationCap } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PICK_GRADE_UNLOCK } from "@/lib/pick-grade";
 import { GradeClientShell } from "./grade-client-shell";
+import db from "@/lib/db";
 
-export default function GradePage() {
+export const dynamic = "force-dynamic";
+
+export default async function GradePage() {
   const now = new Date();
-  const locked = now < PICK_GRADE_UNLOCK;
+  const dateLocked = now < PICK_GRADE_UNLOCK;
 
-  // Countdown values computed server-side for the static lock screen.
-  const msLeft = locked ? PICK_GRADE_UNLOCK.getTime() - now.getTime() : 0;
+  // Also unlock once actual picks exist in the DB regardless of date.
+  const completedPicks = dateLocked ? 0 : await db.player.count({
+    where: { draftYear: 2026, actualPick: { not: null } },
+  });
+  const locked = dateLocked || completedPicks < 2;
+
+  const msLeft = dateLocked ? PICK_GRADE_UNLOCK.getTime() - now.getTime() : 0;
   const hoursLeft = Math.ceil(msLeft / 3_600_000);
 
   return (

@@ -65,12 +65,9 @@ export function eloUpdatePick(
   return { winnerDelta, loserDelta };
 }
 
-// Date after which the Pick Grader unlocks (post-Round 1).
-export const PICK_GRADE_UNLOCK = new Date("2026-04-24T04:00:00Z");
-
-export function pickGraderUnlocked(): boolean {
-  return new Date() >= PICK_GRADE_UNLOCK;
-}
+// Fallback date unlock — the grader also unlocks automatically when
+// actual completed picks exist in the DB (checked in each API route).
+export const PICK_GRADE_UNLOCK = new Date("2026-04-24T00:00:00Z");
 
 // Ordinal suffix helper for pick display (1st, 2nd, 3rd …).
 export function ordinal(n: number): string {

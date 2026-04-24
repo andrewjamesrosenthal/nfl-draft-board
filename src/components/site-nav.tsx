@@ -17,7 +17,7 @@ const LINKS = [
   { href: "/trends",      label: "Trends",     icon: LineChart },
   { href: "/historical",  label: "History",    icon: History },
   { href: "/watchlist",   label: "Watchlist",  icon: Eye },
-  { href: "/grade",       label: "Grade",      icon: GraduationCap, lockedUntil: PICK_GRADE_UNLOCK },
+  { href: "/grade",       label: "Grade",      icon: GraduationCap },
   { href: "/about",       label: "About",      icon: Info },
 ];
 

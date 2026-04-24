@@ -1,14 +1,21 @@
-// Thin wrappers around the ESPN undocumented site.web.api endpoints that the
-// product uses for draft order and prospect profiles. Per CLAUDE.md these
-// endpoints require no auth. Keep TTLs short and cache in the DB so we're not
-// hammering ESPN on every request.
+// Thin wrappers around the ESPN undocumented site.web.api endpoints.
+// Per CLAUDE.md these endpoints require no auth.
+//
+// Actual response shape discovered empirically (April 2026 draft):
+//   pick = {
+//     overall, pick, round, teamId, traded, tradeNote,
+//     status: "ON_THE_CLOCK" | "SELECTION_MADE",
+//     athlete?: {                     ← populated when status === "SELECTION_MADE"
+//       id,                           ← internal ESPN draft ID (not the CDN ID)
+//       alternativeId,                ← the CDN / player-profile ID we use for headshots
+//       displayName,
+//       headshot: { href },
+//       ...
+//     }
+//   }
 
 const BASE = "https://site.web.api.espn.com/apis/site/v2/sports/football/nfl";
 
-// ESPN's actual response (discovered empirically):
-//   { year, rounds (int, total rounds), picks: [...], teams: [...] }
-//   pick = { overall, pick, round, teamId, traded, status ("ON_THE_CLOCK" | "COMPLETED" | ...), selection?: { athlete: {...} } }
-//   team = { id, abbreviation, displayName, logo, ... }
 export type EspnTeam = {
   id: string;
   abbreviation?: string;
@@ -25,8 +32,14 @@ export type EspnPick = {
   tradeNote?: string;
   status?: string;
   originalTeamId?: string;
-  selection?: {
-    athlete?: { id?: string; displayName?: string };
+  // Pre-draft format (not used after draft starts):
+  selection?: { athlete?: { id?: string; displayName?: string } };
+  // Live / post-draft format:
+  athlete?: {
+    id?: string;
+    alternativeId?: string;
+    displayName?: string;
+    headshot?: { href?: string };
   };
 };
 
@@ -55,12 +68,11 @@ export type EspnAthleteResponse = {
 export async function fetchDraftOrder(year: number): Promise<EspnDraftOrderResponse> {
   const url = `${BASE}/draft?season=${year}&region=us&lang=en`;
   const res = await fetch(url, {
-    headers: { "user-agent": "DraftBoard/1.0 (+https://example.com)" },
-    next: { revalidate: 60 },
+    headers: { "user-agent": "DraftBoard/1.0 (+https://draftboard.app)" },
+    // No Next.js cache — we want fresh data every time during the draft.
+    cache: "no-store",
   });
-  if (!res.ok) {
-    throw new Error(`ESPN draft order HTTP ${res.status}`);
-  }
+  if (!res.ok) throw new Error(`ESPN draft order HTTP ${res.status}`);
   return (await res.json()) as EspnDraftOrderResponse;
 }
 
@@ -70,9 +82,7 @@ export async function fetchProspect(espnId: string, year: number): Promise<EspnA
     headers: { "user-agent": "DraftBoard/1.0" },
     next: { revalidate: 3600 },
   });
-  if (!res.ok) {
-    throw new Error(`ESPN prospect HTTP ${res.status}`);
-  }
+  if (!res.ok) throw new Error(`ESPN prospect HTTP ${res.status}`);
   return (await res.json()) as EspnAthleteResponse;
 }
 
@@ -85,8 +95,10 @@ export type FlatPick = {
   teamLogoUrl?: string;
   isOnTheClock: boolean;
   isCompleted: boolean;
+  // The CDN-matched ESPN athlete ID (alternativeId in live data, id in pre-draft data)
   espnAthleteId?: string;
   selectedAthlete?: string;
+  headshotUrl?: string;
   tradedFromAbbr?: string;
 };
 
@@ -100,11 +112,33 @@ export function flattenDraftOrder(data: EspnDraftOrderResponse): FlatPick[] {
   for (const pick of data.picks ?? []) {
     const overall = pick.overall ?? 0;
     if (!overall || !pick.teamId) continue;
+
     const team = teamsById.get(String(pick.teamId));
     const abbr = team?.abbreviation ?? `ID${pick.teamId}`;
     const originalTeam = pick.originalTeamId
       ? teamsById.get(String(pick.originalTeamId))
       : undefined;
+
+    const isCompleted =
+      pick.status === "SELECTION_MADE" ||
+      pick.status === "COMPLETED" ||
+      pick.status === "MADE";
+
+    // Live draft: athlete is top-level. Pre-draft: under selection.athlete.
+    const athleteLive = pick.athlete;
+    const athletePre  = pick.selection?.athlete;
+
+    // Use alternativeId for live picks — it matches our headshot CDN IDs.
+    const espnAthleteId =
+      athleteLive?.alternativeId ??
+      athleteLive?.id ??
+      athletePre?.id;
+
+    const selectedAthlete =
+      athleteLive?.displayName ?? athletePre?.displayName;
+
+    const headshotUrl = athleteLive?.headshot?.href;
+
     flat.push({
       overallPick: overall,
       round: pick.round ?? 0,
@@ -113,9 +147,10 @@ export function flattenDraftOrder(data: EspnDraftOrderResponse): FlatPick[] {
       teamName: team?.displayName,
       teamLogoUrl: team?.logo,
       isOnTheClock: pick.status === "ON_THE_CLOCK",
-      isCompleted: pick.status === "COMPLETED" || pick.status === "MADE",
-      espnAthleteId: pick.selection?.athlete?.id,
-      selectedAthlete: pick.selection?.athlete?.displayName,
+      isCompleted,
+      espnAthleteId,
+      selectedAthlete,
+      headshotUrl,
       tradedFromAbbr: pick.traded ? originalTeam?.abbreviation : undefined,
     });
   }

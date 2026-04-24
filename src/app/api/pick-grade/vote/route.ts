@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import db from "@/lib/db";
 import { getOrCreateUser } from "@/lib/user-session";
-import { eloUpdatePick, pickGraderUnlocked } from "@/lib/pick-grade";
+import { eloUpdatePick, PICK_GRADE_UNLOCK } from "@/lib/pick-grade";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ const bodySchema = z.object({
 });
 
 export async function POST(req: Request) {
-  if (!pickGraderUnlocked()) {
+  if (new Date() < PICK_GRADE_UNLOCK) {
     return NextResponse.json({ error: "locked" }, { status: 403 });
   }
 
